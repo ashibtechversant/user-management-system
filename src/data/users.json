@@ -1,8 +1,9 @@
 [
   {
+    "id": 1,
     "fullName": "Admin",
     "email": "admin@gmail.com",
     "role": "admin",
-    "password": "password"
+    "password": "$2b$12$oWzm0SP53nMeSpaCNjlVoeIa2EqCdj3KgKgd5ibdtUzc6A3nOX9W6"
   }
 ]

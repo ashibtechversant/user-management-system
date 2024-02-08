@@ -1,11 +1,17 @@
 const jwt = require('jsonwebtoken');
-const { jwtSecretKey } = require('../../config/index');
+const { jwtSecretKey, jwtSecretRefreshKey } = require('../../config');
 
 module.exports = {
-  generateToken(user) {
-    return jwt.sign({ id: user.id }, jwtSecretKey);
+  generateToken(userId) {
+    return jwt.sign({ userId }, jwtSecretKey, { expiresIn: '1h' });
   },
   verifyToken(token) {
     return jwt.verify(token, jwtSecretKey);
+  },
+  generateRefreshToken(userId) {
+    return jwt.sign({ userId }, jwtSecretRefreshKey, { expiresIn: '1y' });
+  },
+  verifyRefreshToken(token) {
+    return jwt.verify(token, jwtSecretRefreshKey);
   },
 };
