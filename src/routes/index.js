@@ -1,13 +1,16 @@
 const express = require('express');
+const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-middleware');
+const logger = require('../helpers/winston-helper');
 
 const router = express.Router();
 
-const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-middleware');
-
 router
-  .route('/')
+  .route('/status')
   .get((_, res) => {
-    res.status(200).json({ status: 'ok', message: 'api is working' });
+    logger.info('checking the api status. everything is ok');
+    res
+      .status(200)
+      .json({ status: 'up', message: 'api is working fine and running' });
   })
   .all(methodNotAllowedMiddleware);
 
