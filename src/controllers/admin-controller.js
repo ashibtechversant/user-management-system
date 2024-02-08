@@ -4,17 +4,31 @@ const registrationSchema = require('../schemas/registration-schema');
 const updateSchema = require('../schemas/update-schema');
 const { hashPassword } = require('../utils/bcrypt-utils');
 
+function handleJoiError(error, next) {
+  if (error.isJoi) next(createHttpError.UnprocessableEntity());
+  else next(error);
+}
+
+function validateUser(userId) {
+  const id = Number(userId);
+  if (!id) throw createHttpError.BadRequest();
+  const userIndex = users.findIndex((user) => user.id === id);
+  if (userIndex === -1) throw createHttpError.NotFound('user not found');
+  const user = users[userIndex];
+  return { user, userIndex };
+}
+
+function handleDuplicateEmail(email) {
+  const isEmailAlreadyRegistered = users.some((e) => e.email === email);
+  if (isEmailAlreadyRegistered)
+    throw createHttpError.Conflict(`${email} has already been registered`);
+}
+
 module.exports = {
   async registerUsers(req, res, next) {
     try {
       const result = await registrationSchema.validateAsync(req.body);
-      const isEmailAlreadyRegistered = users.find(
-        (user) => user.email === result.email
-      );
-      if (isEmailAlreadyRegistered)
-        throw createHttpError.Conflict(
-          `${result.email} has already been registered`
-        );
+      handleDuplicateEmail(result.email);
       const hashedPassword = await hashPassword(result.password);
       const finalResult = {
         id: users.length + 1,
@@ -30,8 +44,7 @@ module.exports = {
         },
       });
     } catch (error) {
-      if (error.isJoi) error.status = 422;
-      next(error);
+      handleJoiError(error, next);
     }
   },
 
@@ -51,11 +64,8 @@ module.exports = {
 
   async getUser(req, res, next) {
     try {
-      let { userId } = req.params;
-      userId = Number(userId);
-      if (!userId) throw createHttpError.BadRequest('userId is missing');
-      const user = users.find((e) => e.id === userId);
-      if (!user) throw createHttpError.NotFound('user not found');
+      const { userId } = req.params;
+      const { user } = validateUser(userId);
       res.json({
         status: 'ok',
         message: 'user details retrieved successfully',
@@ -68,11 +78,8 @@ module.exports = {
 
   async deleteUser(req, res, next) {
     try {
-      let { userId } = req.params;
-      userId = Number(userId);
-      if (!userId) throw createHttpError.BadRequest('userId is missing');
-      const userIndex = users.findIndex((user) => user.id === userId);
-      if (userIndex === -1) throw createHttpError.NotFound('user not found');
+      const { userId } = req.params;
+      const { userIndex } = validateUser(userId);
       users.splice(userIndex, 1);
       res.json({ status: 'ok', message: 'user deleted successfully' });
     } catch (error) {
@@ -82,14 +89,19 @@ module.exports = {
 
   async updateUser(req, res, next) {
     try {
-      let { userId } = req.params;
-      userId = Number(userId);
-      if (!userId) throw createHttpError.BadRequest('userId is missing');
-      const userIndex = users.findIndex((user) => user.id === userId);
-      if (userIndex === -1) throw createHttpError.NotFound('user not found');
-      const result = await registrationSchema.validateAsync(req.body);
-      const hashedPassword = await hashPassword(result.password);
-      const finalResult = { id: userId, ...result, password: hashedPassword };
+      const { method } = req;
+      const { userId } = req.params;
+      const { user, userIndex } = validateUser(userId);
+      const schema = method === 'PUT' ? registrationSchema : updateSchema;
+      const result = await schema.validateAsync(req.body);
+      if (result.email && result.email !== user.email)
+        handleDuplicateEmail(result.email);
+      if (result.password)
+        result.password = await hashPassword(result.password);
+      const finalResult =
+        method === 'PUT'
+          ? { id: userIndex + 1, ...result }
+          : { ...user, ...result };
       users.splice(userIndex, 1, finalResult);
       res.json({
         status: 'ok',
@@ -97,30 +109,7 @@ module.exports = {
         data: { user: finalResult },
       });
     } catch (error) {
-      next(error);
-    }
-  },
-
-  async partialUpdateUser(req, res, next) {
-    try {
-      let { userId } = req.params;
-      userId = Number(userId);
-      if (!userId) throw createHttpError.BadRequest('userId is missing');
-      const user = users.find((e) => e.id === userId);
-      console.log(user);
-      if (!user) throw createHttpError.NotFound('user not found');
-      const result = await updateSchema.validateAsync(req.body);
-      if (result.password)
-        result.password = await hashPassword(result.password);
-      const finalResult = { ...user, ...result };
-      users.splice(userId - 1, 1, finalResult);
-      res.json({
-        status: 'ok',
-        message: 'user updated successfully',
-        data: { user: finalResult },
-      });
-    } catch (error) {
-      next(error);
+      handleJoiError(error, next);
     }
   },
 };

@@ -20,7 +20,7 @@ router
   .get(adminController.getUser)
   .delete(adminController.deleteUser)
   .put(adminController.updateUser)
-  .patch(adminController.partialUpdateUser)
+  .patch(adminController.updateUser)
   .all(methodNotAllowedMiddleware);
 
 module.exports = router;

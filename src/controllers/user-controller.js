@@ -5,7 +5,7 @@ module.exports = {
   async fetchUserDetails(req, res, next) {
     try {
       const { userId } = req.payload;
-      if (!userId) throw createHttpError.BadRequest('userId is missing');
+      if (!userId) throw createHttpError.BadRequest();
       const user = users.find((e) => e.id === userId);
       if (!user) throw createHttpError.NotFound('user not found');
       res.json({

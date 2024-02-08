@@ -28,8 +28,7 @@ module.exports = {
         data: { accessToken, refreshToken },
       });
     } catch (error) {
-      if (error.isJoi)
-        next(createHttpError.BadRequest('invalid email or password'));
+      if (error.isJoi) next(createHttpError.UnprocessableEntity());
       else next(error);
     }
   },
