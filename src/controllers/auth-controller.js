@@ -23,9 +23,9 @@ module.exports = {
       const accessToken = generateToken(user.id);
       const refreshToken = generateRefreshToken(user.id);
       res.json({
-        status: 'ok',
+        status: 'true',
         message: 'authentication successful',
-        data: { accessToken, refreshToken },
+        data: { accessToken, refreshToken, role: user.role },
       });
     } catch (error) {
       if (error.isJoi) next(createHttpError.UnprocessableEntity());
@@ -42,7 +42,7 @@ module.exports = {
         const accessToken = generateToken(userId);
         const newRefreshToken = generateRefreshToken(userId);
         res.status(201).json({
-          status: 'created',
+          status: 'true',
           message: 'tokens refreshed',
           data: { accessToken, refreshToken: newRefreshToken },
         });

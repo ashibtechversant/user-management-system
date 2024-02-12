@@ -1,9 +1,9 @@
 const morgan = require('morgan');
-const logger = require('../helpers/winston-helper');
+const logger = require('../utils/winston-utils');
 const { nodeEnv } = require('../../config');
 
 const stream = {
-  write: (message) => logger.http(message),
+  write: (message) => logger.http(message.replace(/\n$/, '')),
 };
 const skip = () => {
   const env = nodeEnv || 'development';

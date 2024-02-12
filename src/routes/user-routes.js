@@ -5,9 +5,15 @@ const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-mid
 
 const router = express.Router();
 
+router.use(authMiddleware);
+
 router
-  .route('/')
-  .get(authMiddleware, userController.fetchUserDetails)
+  .route('/:userId')
+  .get(userController.getUser)
+  .put(userController.updateUser)
+  .patch(userController.updateUser)
   .all(methodNotAllowedMiddleware);
+
+router.put('/:userId/password', userController.changePassword);
 
 module.exports = router;

@@ -5,8 +5,9 @@ const apiRouter = require('./routes');
 // Load environment variables
 dotenv.config();
 dotenv.config({ path: '.env.local' });
+
 const { port, nodeEnv } = require('../config');
-const logger = require('./helpers/winston-helper');
+const logger = require('./utils/winston-utils');
 const notFoundMiddleware = require('./middleware/not-found-middleware');
 const errorHandlerMiddleware = require('./middleware/error-handler-middleware');
 const morganMiddleware = require('./middleware/morgan-middleware');

@@ -1,28 +1,12 @@
-const createHttpError = require('http-errors');
 const users = require('../data/users.json');
 const registrationSchema = require('../schemas/registration-schema');
-const updateSchema = require('../schemas/update-schema');
+const adminUserUpdateSchema = require('../schemas/admin-user-update-schema');
 const { hashPassword } = require('../utils/bcrypt-utils');
-
-function handleJoiError(error, next) {
-  if (error.isJoi) next(createHttpError.UnprocessableEntity());
-  else next(error);
-}
-
-function validateUser(userId) {
-  const id = Number(userId);
-  if (!id) throw createHttpError.BadRequest();
-  const userIndex = users.findIndex((user) => user.id === id);
-  if (userIndex === -1) throw createHttpError.NotFound('user not found');
-  const user = users[userIndex];
-  return { user, userIndex };
-}
-
-function handleDuplicateEmail(email) {
-  const isEmailAlreadyRegistered = users.some((e) => e.email === email);
-  if (isEmailAlreadyRegistered)
-    throw createHttpError.Conflict(`${email} has already been registered`);
-}
+const {
+  handleDuplicateEmail,
+  validateUser,
+} = require('../utils/helpers/controllers/users');
+const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
 
 module.exports = {
   async registerUsers(req, res, next) {
@@ -37,7 +21,7 @@ module.exports = {
       };
       users.push(finalResult);
       res.status(201).json({
-        status: 'created',
+        status: 'true',
         message: 'registration successful',
         data: {
           user: finalResult,
@@ -51,7 +35,7 @@ module.exports = {
   async getAllUsers(_, res, next) {
     try {
       res.json({
-        status: 'ok',
+        status: 'true',
         message: 'users retrieved successfully',
         data: {
           users,
@@ -67,7 +51,7 @@ module.exports = {
       const { userId } = req.params;
       const { user } = validateUser(userId);
       res.json({
-        status: 'ok',
+        status: 'true',
         message: 'user details retrieved successfully',
         data: user,
       });
@@ -81,7 +65,7 @@ module.exports = {
       const { userId } = req.params;
       const { userIndex } = validateUser(userId);
       users.splice(userIndex, 1);
-      res.json({ status: 'ok', message: 'user deleted successfully' });
+      res.json({ status: 'true', message: 'user deleted successfully' });
     } catch (error) {
       next(error);
     }
@@ -92,7 +76,8 @@ module.exports = {
       const { method } = req;
       const { userId } = req.params;
       const { user, userIndex } = validateUser(userId);
-      const schema = method === 'PUT' ? registrationSchema : updateSchema;
+      const schema =
+        method === 'PUT' ? registrationSchema : adminUserUpdateSchema;
       const result = await schema.validateAsync(req.body);
       if (result.email && result.email !== user.email)
         handleDuplicateEmail(result.email);
@@ -104,7 +89,7 @@ module.exports = {
           : { ...user, ...result };
       users.splice(userIndex, 1, finalResult);
       res.json({
-        status: 'ok',
+        status: 'true',
         message: 'user updated successfully',
         data: { user: finalResult },
       });
