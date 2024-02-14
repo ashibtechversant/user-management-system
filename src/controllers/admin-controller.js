@@ -1,4 +1,4 @@
-const users = require('../data/users.json');
+const users = require('../../data/users.json');
 const registrationSchema = require('../schemas/registration-schema');
 const adminUserUpdateSchema = require('../schemas/admin-user-update-schema');
 const { hashPassword } = require('../utils/bcrypt-utils');
@@ -7,6 +7,7 @@ const {
   validateUser,
 } = require('../utils/helpers/controllers/users');
 const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
+const writeUsers = require('../utils/helpers/data/write-users');
 
 module.exports = {
   async registerUsers(req, res, next) {
@@ -20,6 +21,7 @@ module.exports = {
         password: hashedPassword,
       };
       users.push(finalResult);
+      await writeUsers(users);
       res.status(201).json({
         status: 'true',
         message: 'registration successful',
@@ -65,6 +67,7 @@ module.exports = {
       const { userId } = req.params;
       const { userIndex } = validateUser(userId);
       users.splice(userIndex, 1);
+      await writeUsers(users);
       res.json({ status: 'true', message: 'user deleted successfully' });
     } catch (error) {
       next(error);
@@ -88,6 +91,7 @@ module.exports = {
           ? { id: userIndex + 1, ...result }
           : { ...user, ...result };
       users.splice(userIndex, 1, finalResult);
+      await writeUsers(users);
       res.json({
         status: 'true',
         message: 'user updated successfully',

@@ -1,5 +1,5 @@
 const createHttpError = require('http-errors');
-const users = require('../data/users.json');
+const users = require('../../data/users.json');
 
 module.exports = async (req, _, next) => {
   try {

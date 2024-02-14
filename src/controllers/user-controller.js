@@ -1,5 +1,5 @@
 const createHttpError = require('http-errors');
-const users = require('../data/users.json');
+const users = require('../../data/users.json');
 const {
   validateUser,
   validateUserId,
@@ -8,7 +8,8 @@ const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
 const updateSchema = require('../schemas/update-schema');
 const updatePartialSchema = require('../schemas/update-partial-schema');
 const passwordSchema = require('../schemas/password-schema');
-const { hashPassword } = require('../utils/bcrypt-utils');
+const { hashPassword, checkPassword } = require('../utils/bcrypt-utils');
+const writeUsers = require('../utils/helpers/data/write-users');
 
 module.exports = {
   async getUser(req, res, next) {
@@ -41,6 +42,7 @@ module.exports = {
           ? { id: userIndex + 1, ...result }
           : { ...user, ...result };
       users.splice(userIndex, 1, finalResult);
+      await writeUsers(users);
       res.json({
         status: 'true',
         message: 'user updated successfully',
@@ -56,14 +58,34 @@ module.exports = {
       const { userId: payloadUserId } = req.payload;
       validateUserId(payloadUserId, paramsUserId);
       const result = await passwordSchema.validateAsync(req.body);
-      const hashedPassword = await hashPassword(result.newPassword);
       const { user, userIndex } = validateUser(payloadUserId);
+      const isPasswordValid = await checkPassword(
+        result.currentPassword,
+        user.password
+      );
+      if (!isPasswordValid)
+        throw createHttpError.BadRequest('incorrect password');
+      const hashedPassword = await hashPassword(result.newPassword);
       const finalResult = { ...user, password: hashedPassword };
       users.splice(userIndex, 1, finalResult);
+      await writeUsers(users);
       res.json({
         status: 'true',
         message: 'password updated successfully',
         data: { user: finalResult },
+      });
+    } catch (error) {
+      handleJoiError(error, next);
+    }
+  },
+  async uploadImage(req, res, next) {
+    try {
+      const { file } = req;
+      if (!file) throw createHttpError.BadRequest('file not uploaded');
+      res.json({
+        status: 'true',
+        message: 'file uploaded successfully',
+        data: { file },
       });
     } catch (error) {
       handleJoiError(error, next);

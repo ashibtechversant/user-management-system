@@ -1,5 +1,5 @@
 const createHttpError = require('http-errors');
-const users = require('../data/users.json');
+const users = require('../../data/users.json');
 const loginSchema = require('../schemas/login-schema');
 const { checkPassword } = require('../utils/bcrypt-utils');
 const {
