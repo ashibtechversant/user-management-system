@@ -1,0 +1,95 @@
+tags:
+  name: Auth Routes
+  description: Routes specified authentication and jwt purposes.
+/auth/login:
+  post:
+    summary: Login to get jwt
+    requestBody:
+      description: Login details of the user
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User Login'
+    tags: [Auth Routes]
+    responses:
+      '200':
+        description: JWT successfully generated
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+                data:
+                  type: object
+                  properties:
+                    accessToken:
+                      type: string
+                      description: jwt access token
+                    refreshToken:
+                      type: string
+                      description: jwt refresh token
+                    role:
+                      type: string
+                      enum: [admin, agent, supervisor, qc, qa]
+                      description: Role type of user
+      '401':
+        description: Unauthorized - Invalid email or password
+      '404':
+        description: Not Found - User not found
+      '422':
+        description: Unprocessable Entity - Check the request body
+      '500':
+        description: Internal Server Error - Couldn't connect to the server
+/auth/refresh-token:
+  post:
+    summary: Get a new pair of access and refresh tokens
+    tags: [Auth Routes]
+    requestBody:
+      description: Login details of the user
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              refreshToken:
+                type: string
+                description: The current jwt refresh token value
+    responses:
+      '200':
+        description: New pair of access and refresh tokens generated
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+                data:
+                  type: object
+                  properties:
+                    accessToken:
+                      type: string
+                      description: New access token
+                    refreshToken:
+                      type: string
+                      description: New refresh token
+      '400':
+        description: Bad Request - Missing refresh token
+      '401':
+        description: Unauthorized - Invalid or missing token
+      '500':
+        description: Internal Server Error - Couldn't connect to the server

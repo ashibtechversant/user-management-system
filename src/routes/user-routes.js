@@ -1,6 +1,6 @@
 const express = require('express');
 const userController = require('../controllers/user-controller');
-const authMiddleware = require('../middleware/auth-middleware');
+const authMiddleware = require('../middleware/authentication-middleware');
 const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-middleware');
 const multerMiddleware = require('../middleware/multer-middleware');
 const resizeImageMiddleware = require('../middleware/resize-image-middleware');
@@ -16,7 +16,10 @@ router
   .patch(userController.updateUser)
   .all(methodNotAllowedMiddleware);
 
-router.put('/:userId/password', userController.changePassword);
+router
+  .route('/:userId/password')
+  .put(userController.changePassword)
+  .patch(userController.changePassword);
 
 router.post(
   '/:userId/profile-picture',

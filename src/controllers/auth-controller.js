@@ -7,6 +7,8 @@ const {
   generateRefreshToken,
   verifyRefreshToken,
 } = require('../utils/jwt-utils');
+const responseFormatter = require('../utils/helpers/controllers/response-formatter');
+const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
 
 module.exports = {
   async login(req, res, next) {
@@ -22,14 +24,15 @@ module.exports = {
         throw createHttpError.Unauthorized('incorrect email or password');
       const accessToken = generateToken(user.id);
       const refreshToken = generateRefreshToken(user.id);
-      res.json({
-        status: 'true',
-        message: 'authentication successful',
-        data: { accessToken, refreshToken, role: user.role },
-      });
+      res.json(
+        responseFormatter('authentication successful', {
+          accessToken,
+          refreshToken,
+          role: user.role,
+        })
+      );
     } catch (error) {
-      if (error.isJoi) next(createHttpError.UnprocessableEntity());
-      else next(error);
+      handleJoiError(error, next);
     }
   },
 
@@ -41,11 +44,12 @@ module.exports = {
         const { userId } = verifyRefreshToken(refreshToken);
         const accessToken = generateToken(userId);
         const newRefreshToken = generateRefreshToken(userId);
-        res.status(201).json({
-          status: 'true',
-          message: 'tokens refreshed',
-          data: { accessToken, refreshToken: newRefreshToken },
-        });
+        res.status(201).json(
+          responseFormatter('tokens refreshed', {
+            accessToken,
+            refreshToken: newRefreshToken,
+          })
+        );
       } catch (error) {
         throw createHttpError.Unauthorized();
       }

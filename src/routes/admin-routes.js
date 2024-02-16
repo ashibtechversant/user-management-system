@@ -1,13 +1,13 @@
 const express = require('express');
 const adminController = require('../controllers/admin-controller');
-const authMiddleware = require('../middleware/auth-middleware');
-const adminAuthMiddleware = require('../middleware/admin-auth-middleware');
+const authMiddleware = require('../middleware/authentication-middleware');
+const authorizationMiddleware = require('../middleware/authorization-middleware');
 const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-middleware');
 
 const router = express.Router();
 
 router.use(authMiddleware);
-router.use(adminAuthMiddleware);
+router.use(authorizationMiddleware('admin'));
 
 router
   .route('/users')
@@ -18,9 +18,9 @@ router
 router
   .route('/users/:userId')
   .get(adminController.getUser)
-  .delete(adminController.deleteUser)
   .put(adminController.updateUser)
   .patch(adminController.updateUser)
+  .delete(adminController.deleteUser)
   .all(methodNotAllowedMiddleware);
 
 module.exports = router;

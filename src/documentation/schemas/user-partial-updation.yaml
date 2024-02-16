@@ -1,0 +1,16 @@
+components:
+  schemas:
+    User Partial Updation:
+      type: object
+      properties:
+        fullName:
+          type: string
+          minLength: 3
+          description: Full Name of the user
+        role:
+          type: string
+          enum: [admin, agent, supervisor, qc, qa]
+          description: Type of role of the user
+        profilePictureUrl:
+          type: string
+          description: Profile picture url path of the user

@@ -10,6 +10,7 @@ const updatePartialSchema = require('../schemas/update-partial-schema');
 const passwordSchema = require('../schemas/password-schema');
 const { hashPassword, checkPassword } = require('../utils/bcrypt-utils');
 const writeUsers = require('../utils/helpers/data/write-users');
+const responseFormatter = require('../utils/helpers/controllers/response-formatter');
 
 module.exports = {
   async getUser(req, res, next) {
@@ -19,15 +20,14 @@ module.exports = {
       validateUserId(payloadUserId, paramsUserId);
       const user = users.find((e) => e.id === payloadUserId);
       if (!user) throw createHttpError.NotFound('user not found');
-      res.json({
-        status: 'true',
-        message: 'user details retrieved successfully',
-        data: user,
-      });
+      res.json(
+        responseFormatter('user details retrieved successfully', { user })
+      );
     } catch (error) {
       next(error);
     }
   },
+
   async updateUser(req, res, next) {
     try {
       const { method } = req;
@@ -41,17 +41,22 @@ module.exports = {
         method === 'PUT'
           ? { id: userIndex + 1, ...result }
           : { ...user, ...result };
+      if (JSON.stringify(user) === JSON.stringify(finalResult))
+        return res.json(
+          responseFormatter('no changes were found for updation', {
+            user,
+          })
+        );
       users.splice(userIndex, 1, finalResult);
       await writeUsers(users);
-      res.json({
-        status: 'true',
-        message: 'user updated successfully',
-        data: { user: finalResult },
-      });
+      return res.json(
+        responseFormatter('user updated successfully', { user: finalResult })
+      );
     } catch (error) {
-      handleJoiError(error, next);
+      return handleJoiError(error, next);
     }
   },
+
   async changePassword(req, res, next) {
     try {
       const { userId: paramsUserId } = req.params;
@@ -67,26 +72,27 @@ module.exports = {
         throw createHttpError.BadRequest('incorrect password');
       const hashedPassword = await hashPassword(result.newPassword);
       const finalResult = { ...user, password: hashedPassword };
+      if (hashedPassword === user.password)
+        return res.json(
+          responseFormatter('no changes were made to the password', { user })
+        );
       users.splice(userIndex, 1, finalResult);
       await writeUsers(users);
-      res.json({
-        status: 'true',
-        message: 'password updated successfully',
-        data: { user: finalResult },
-      });
+      return res.json(
+        responseFormatter('password updated successfully', {
+          user: finalResult,
+        })
+      );
     } catch (error) {
-      handleJoiError(error, next);
+      return handleJoiError(error, next);
     }
   },
+
   async uploadImage(req, res, next) {
     try {
       const { file } = req;
       if (!file) throw createHttpError.BadRequest('file not uploaded');
-      res.json({
-        status: 'true',
-        message: 'file uploaded successfully',
-        data: { file },
-      });
+      res.json(responseFormatter('file uploaded successfully', { file }));
     } catch (error) {
       handleJoiError(error, next);
     }

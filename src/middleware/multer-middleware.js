@@ -1,13 +1,21 @@
 const createHttpError = require('http-errors');
 const multer = require('multer');
+const { validateUserId } = require('../utils/helpers/controllers/users');
 
 const storage = multer.memoryStorage();
 
-const fileFilter = (_, file, cb) => {
+const fileFilter = (req, file, next) => {
+  const { userId: paramsUserId } = req.params;
+  const { userId: payloadUserId } = req.payload;
+  try {
+    validateUserId(payloadUserId, paramsUserId);
+  } catch (err) {
+    next(err);
+  }
   if (file.mimetype.startsWith('image')) {
-    cb(null, true);
+    next(null, true);
   } else {
-    cb(createHttpError.BadRequest('please upload an image file'));
+    next(createHttpError.BadRequest('please upload an image file'));
   }
 };
 

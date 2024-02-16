@@ -1,0 +1,277 @@
+tags:
+  name: Admin Routes
+  description: Routes specified for admin use after logging in as admin.
+
+/admin/users:
+  get:
+    summary: Lists all registered users
+    tags: [Admin Routes]
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: Retrieved all registered users
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+                data:
+                  type: object
+                  properties:
+                    users:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/User'
+      '400':
+        description: Bad Request - Missing token or userId
+      '401':
+        description: Unauthorized - Invalid or missing token
+      '403':
+        description: Forbidden - Admin authorization failed
+      '404':
+        description: Not Found - User not found
+      '500':
+        description: Internal Server Error - Couldn't connect to the server
+  post:
+    summary: Register a new user
+    requestBody:
+      description: Details of the new user
+      required: 'true'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User Registration and Updation (Admin)'
+    tags: [Admin Routes]
+    security:
+      - bearerAuth: []
+    responses:
+      '201':
+        description: Registration successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+                data:
+                  type: object
+                  properties:
+                    user:
+                      $ref: '#/components/schemas/User'
+      '400':
+        description: Bad Request - Missing token or userId
+      '401':
+        description: Unauthorized - Invalid or missing token
+      '403':
+        description: Forbidden - Admin authorization failed
+      '409':
+        description: Conflict - Email has already been registered
+      '422':
+        description: Unprocessable Entity - Check the request body
+      '500':
+        description: Internal Server Error - Couldn't connect to the server
+
+/admin/users/{userId}:
+  get:
+    summary: Get user details by user ID
+    tags: [Admin Routes]
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: userId
+        required: 'true'
+        description: ID of the user
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: User details retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+                data:
+                  type: object
+                  properties:
+                    user:
+                      $ref: '#/components/schemas/User'
+      '400':
+        description: Bad Request - Missing token or userId or userId is not a number (invalid)
+      '401':
+        description: Unauthorized - Invalid or missing token.
+      '403':
+        description: Forbidden - Admin authorization failed
+      '404':
+        description: Not Found - User not found
+      '409':
+        description: Conflict - Email has already been registered
+      '422':
+        description: Unprocessable Entity - Check the request body
+      '500':
+        description: Internal Server Error - Couldn't connect to the server
+  put:
+    summary: Update all user details by user ID
+    requestBody:
+      description: Modified user details. Required fields cannot be omitted.
+      required: 'true'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User Registration and Updation (Admin)'
+    tags: [Admin Routes]
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: userId
+        required: 'true'
+        description: ID of the user
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: User details updated successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+                data:
+                  type: object
+                  properties:
+                    user:
+                      $ref: '#/components/schemas/User'
+      '400':
+        description: Bad Request - Missing token or userId or userId is not a number (invalid)
+      '401':
+        description: Unauthorized - Invalid or missing token.
+      '403':
+        description: Forbidden - Admin authorization failed
+      '404':
+        description: Not Found - User not found
+      '409':
+        description: Conflict - Email has already been registered
+      '422':
+        description: Unprocessable Entity - Check the request body
+      '500':
+        description: Internal Server Error - Couldn't connect to the server
+  patch:
+    summary: Update user details partially by user ID
+    tags: [Admin Routes]
+    requestBody:
+      description: Details of the user to be updated. Can omit fields which need not be updated.
+      required: 'true'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User Partial Updation (Admin)'
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: userId
+        required: 'true'
+        description: ID of the user
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: User details retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+                data:
+                  type: object
+                  properties:
+                    user:
+                      $ref: '#/components/schemas/User'
+      '400':
+        description: Bad Request - Missing token or userId or userId is not a number (invalid)
+      '401':
+        description: Unauthorized - Invalid or missing token.
+      '403':
+        description: Forbidden - Admin authorization failed
+      '404':
+        description: Not Found - User not found
+      '409':
+        description: Conflict - Email has already been registered
+      '422':
+        description: Unprocessable Entity - Check the request body
+      '500':
+        description: Internal Server Error - Couldn't connect to the server
+  delete:
+    summary: Get user details by user ID
+    tags: [Admin Routes]
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: userId
+        required: 'true'
+        description: ID of the user
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: User deleted successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+      '400':
+        description: Bad Request - Missing token or userId or userId is not a number (invalid)
+      '401':
+        description: Unauthorized - Invalid or missing token.
+      '403':
+        description: Forbidden - Admin authorization failed
+      '404':
+        description: Not Found - User not found
+      '500':
+        description: Internal Server Error - Couldn't connect to the server

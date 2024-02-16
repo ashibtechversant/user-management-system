@@ -30,3 +30,17 @@
 
 - To run the server again go to the project directory and run
   `npm start` or `npm run dev`
+
+- You can find the logs on `logs/all.logs`
+
+- The documentation can be found at
+  [documentation](http://localhost:3000/api-docs/)
+
+  `http://localhost:3000/api-docs/`
+
+- To login as admin use
+
+```
+email: admin@gmail.com
+password: password
+```

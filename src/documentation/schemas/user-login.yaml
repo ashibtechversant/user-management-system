@@ -1,0 +1,17 @@
+components:
+  schemas:
+    User Login:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Registered email of the user
+        password:
+          type: string
+          minLength: 8
+          pattern: '^[a-zA-Z0-9]{3,30}$'
+          description: Password to login as user
+      required:
+        - email
+        - password
