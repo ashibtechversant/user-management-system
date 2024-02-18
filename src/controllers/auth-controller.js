@@ -24,11 +24,14 @@ module.exports = {
         throw createHttpError.Unauthorized('incorrect email or password');
       const accessToken = generateToken(user.id);
       const refreshToken = generateRefreshToken(user.id);
+      const userDetails = {
+        accessToken,
+        refreshToken,
+        role: user.role,
+      };
       res.json(
         responseFormatter('authentication successful', {
-          accessToken,
-          refreshToken,
-          role: user.role,
+          user: userDetails,
         })
       );
     } catch (error) {
@@ -44,12 +47,11 @@ module.exports = {
         const { userId } = verifyRefreshToken(refreshToken);
         const accessToken = generateToken(userId);
         const newRefreshToken = generateRefreshToken(userId);
-        res.status(201).json(
-          responseFormatter('tokens refreshed', {
-            accessToken,
-            refreshToken: newRefreshToken,
-          })
-        );
+        const user = {
+          accessToken,
+          refreshToken: newRefreshToken,
+        };
+        res.status(201).json(responseFormatter('tokens refreshed'), { user });
       } catch (error) {
         throw createHttpError.Unauthorized();
       }

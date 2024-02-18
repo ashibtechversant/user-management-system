@@ -1,0 +1,23 @@
+tags:
+  name: Status Route
+  description: Check whether the server is running or not.
+
+/status:
+  get:
+    summary: Check whether api is up
+    tags: [Status Route]
+    responses:
+      '200':
+        description: API is up and running
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response

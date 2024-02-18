@@ -31,15 +31,31 @@ tags:
                       items:
                         $ref: '#/components/schemas/User'
       '400':
-        description: Bad Request - Missing token or userId
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token. Please authorize with a jwt token.
       '401':
-        description: Unauthorized - Invalid or missing token
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token. Try with a different jwt token.
       '403':
-        description: Forbidden - Admin authorization failed
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Admin authorization failed. Use a token with admin privilege.
       '404':
-        description: Not Found - User not found
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found. Try with a different jwt token.
       '500':
-        description: Internal Server Error - Couldn't connect to the server
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
   post:
     summary: Register a new user
     requestBody:
@@ -73,17 +89,36 @@ tags:
                     user:
                       $ref: '#/components/schemas/User'
       '400':
-        description: Bad Request - Missing token or userId
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token. Please authorize with a jwt token.
       '401':
-        description: Unauthorized - Invalid or missing token
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token. Try with a different jwt token.
       '403':
-        description: Forbidden - Admin authorization failed
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Admin authorization failed. Use a token with admin privilege.
       '409':
-        description: Conflict - Email has already been registered
+        description: |
+          **Conflict**  
+          *Possible Reasons:*
+          - Email has already been registered. Try using a different email.
       '422':
-        description: Unprocessable Entity - Check the request body
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed. Try checking the request body.
       '500':
-        description: Internal Server Error - Couldn't connect to the server
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
 
 /admin/users/{userId}:
   get:
@@ -119,19 +154,42 @@ tags:
                     user:
                       $ref: '#/components/schemas/User'
       '400':
-        description: Bad Request - Missing token or userId or userId is not a number (invalid)
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token. Please authorize with a jwt token. 
+          - Invalid userId in path. Try using a different userId and check if it is of number type.
       '401':
-        description: Unauthorized - Invalid or missing token.
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token. Try with a different jwt token.
       '403':
-        description: Forbidden - Admin authorization failed
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Admin authorization failed. Use a token with admin privilege.
       '404':
-        description: Not Found - User not found
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found. Try with a different jwt token.
       '409':
-        description: Conflict - Email has already been registered
+        description: |
+          **Conflict**  
+          *Possible Reasons:*
+          - Email has already been registered. Try using a different email.
       '422':
-        description: Unprocessable Entity - Check the request body
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed. Try checking the request body.
       '500':
-        description: Internal Server Error - Couldn't connect to the server
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
   put:
     summary: Update all user details by user ID
     requestBody:
@@ -172,19 +230,42 @@ tags:
                     user:
                       $ref: '#/components/schemas/User'
       '400':
-        description: Bad Request - Missing token or userId or userId is not a number (invalid)
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token. Please authorize with a jwt token. 
+          - Invalid userId in path. Try using a different userId and check if it is of number type.
       '401':
-        description: Unauthorized - Invalid or missing token.
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token. Try with a different jwt token.
       '403':
-        description: Forbidden - Admin authorization failed
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Admin authorization failed. Use a token with admin privilege.
       '404':
-        description: Not Found - User not found
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found. Try with a different jwt token.
       '409':
-        description: Conflict - Email has already been registered
+        description: |
+          **Conflict**  
+          *Possible Reasons:*
+          - Email has already been registered. Try using a different email.
       '422':
-        description: Unprocessable Entity - Check the request body
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed. Try checking the request body.
       '500':
-        description: Internal Server Error - Couldn't connect to the server
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
   patch:
     summary: Update user details partially by user ID
     tags: [Admin Routes]
@@ -225,19 +306,42 @@ tags:
                     user:
                       $ref: '#/components/schemas/User'
       '400':
-        description: Bad Request - Missing token or userId or userId is not a number (invalid)
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token. Please authorize with a jwt token. 
+          - Invalid userId in path. Try using a different userId and check if it is of number type.
       '401':
-        description: Unauthorized - Invalid or missing token.
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token. Try with a different jwt token.
       '403':
-        description: Forbidden - Admin authorization failed
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Admin authorization failed. Use a token with admin privilege.
       '404':
-        description: Not Found - User not found
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found. Try with a different jwt token.
       '409':
-        description: Conflict - Email has already been registered
+        description: |
+          **Conflict**  
+          *Possible Reasons:*
+          - Email has already been registered. Try using a different email.
       '422':
-        description: Unprocessable Entity - Check the request body
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed. Try checking the request body.
       '500':
-        description: Internal Server Error - Couldn't connect to the server
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
   delete:
     summary: Get user details by user ID
     tags: [Admin Routes]
@@ -266,12 +370,29 @@ tags:
                   type: string
                   description: Description of the response
       '400':
-        description: Bad Request - Missing token or userId or userId is not a number (invalid)
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token. Please authorize with a jwt token. 
+          - Invalid userId in path. Try using a different userId and check if it is of number type.
       '401':
-        description: Unauthorized - Invalid or missing token.
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token. Try with a different jwt token.
       '403':
-        description: Forbidden - Admin authorization failed
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Admin authorization failed. Use a token with admin privilege.
       '404':
-        description: Not Found - User not found
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found. Try with a different jwt token.
       '500':
-        description: Internal Server Error - Couldn't connect to the server
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors

@@ -91,10 +91,9 @@ module.exports = {
   async uploadImage(req, res, next) {
     try {
       const { file } = req;
-      if (!file) throw createHttpError.BadRequest('file not uploaded');
       res.json(responseFormatter('file uploaded successfully', { file }));
     } catch (error) {
-      handleJoiError(error, next);
+      next(error);
     }
   },
 };

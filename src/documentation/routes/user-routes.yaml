@@ -1,7 +1,3 @@
-tags:
-  name: User Routes
-  description: Routes specified to users after logging in as agent/supervisor/qc/qa.
-
 /users/{userId}:
   get:
     summary: Get user details by user ID after authorization
@@ -36,15 +32,32 @@ tags:
                     user:
                       $ref: '#/components/schemas/User'
       '400':
-        description: Bad Request - Missing token or userId is invalid
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token: Please authorize with a JWT token.
+          - Invalid userId in path: Try using a different userId and check if it is of number type.
       '401':
-        description: Unauthorized - Invalid or missing token
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token: Try with a different JWT token.
       '403':
-        description: Forbidden - Authorization failed
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Authorization failed: Check userId in the path.
       '404':
-        description: Not Found - User not found
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found: Try with a different JWT token.
       '500':
-        description: Internal Server Error - Couldn't connect to the server or userId is missing
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
   put:
     summary: Update all user details (excluding password)
     tags: [User Routes]
@@ -85,19 +98,42 @@ tags:
                     user:
                       $ref: '#/components/schemas/User'
       '400':
-        description: Bad Request - Missing token or userId is invalid
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token: Please authorize with a JWT token.
+          - Invalid userId in path: Try using a different userId and check if it is of number type.
       '401':
-        description: Unauthorized - Invalid or missing token
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token: Try with a different JWT token.
       '403':
-        description: Forbidden - Authorization failed
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Authorization failed: Check userId in the path.
       '404':
-        description: Not Found - User not found
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found: Try with a different JWT token.
       '409':
-        description: Conflict - Email has already been registered
+        description: |
+          **Conflict**  
+          *Possible Reasons:*
+          - Email has already been registered: Try using a different email.
       '422':
-        description: Unprocessable Entity - Validation failed
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed: Try checking the request body.
       '500':
-        description: Internal Server Error - Couldn't connect to the server or userId is missing
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
   patch:
     summary: Update user details partially (excluding password)
     tags: [User Routes]
@@ -138,19 +174,42 @@ tags:
                     user:
                       $ref: '#/components/schemas/User'
       '400':
-        description: Bad Request - Missing token or userId is invalid
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token: Please authorize with a JWT token.
+          - Invalid userId in path: Try using a different userId and check if it is of number type.
       '401':
-        description: Unauthorized - Invalid or missing token
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token: Try with a different JWT token.
       '403':
-        description: Forbidden - Authorization failed
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Authorization failed: Check userId in the path.
       '404':
-        description: Not Found - User not found
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found: Try with a different JWT token.
       '409':
-        description: Conflict - Email has already been registered
+        description: |
+          **Conflict**  
+          *Possible Reasons:*
+          - Email has already been registered: Try using a different email.
       '422':
-        description: Unprocessable Entity - Validation failed
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed: Try checking the request body.
       '500':
-        description: Internal Server Error - Couldn't connect to the server or userId is missing
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
 
 /users/{userId}/password:
   put:
@@ -193,16 +252,38 @@ tags:
                     user:
                       $ref: '#/components/schemas/User'
       '400':
-        description: Bad Request - Missing token or userId/password is invalid
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token: Please authorize with a JWT token.
+          - Invalid userId in path: Try using a different userId and check if it is of number type.
+          - Incorrect password: Check the password and try again.
       '401':
-        description: Unauthorized - Invalid or missing token
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token: Try with a different JWT token.
+      '403':
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Authorization failed: Check userId in the path.
       '404':
-        description: Not Found - User not found
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found: Try with a different JWT token.
       '422':
-        description: Unprocessable Entity - Validation failed
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed: Try checking the request body.
       '500':
-        description: Internal Server Error - Couldn't connect to the server or userId is missing
-
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
   patch:
     summary: Change user password
     tags: [User Routes]
@@ -243,15 +324,38 @@ tags:
                     user:
                       $ref: '#/components/schemas/User'
       '400':
-        description: Bad Request - Missing token or userId/password is invalid
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token: Please authorize with a JWT token.
+          - Invalid userId in path: Try using a different userId and check if it is of number type.
+          - Incorrect password: Check the password and try again.
       '401':
-        description: Unauthorized - Invalid or missing token
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token: Try with a different JWT token.
+      '403':
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Authorization failed: Check userId in the path.
       '404':
-        description: Not Found - User not found
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found: Try with a different JWT token.
       '422':
-        description: Unprocessable Entity - Validation failed
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed: Try checking the request body.
       '500':
-        description: Internal Server Error - Couldn't connect to the server or userId is missing
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
 
 /users/{userId}/profile-picture:
   post:
@@ -292,7 +396,44 @@ tags:
                 data:
                   type: object
                   properties:
-                    filename:
-                      type: string
-                    path:
-                      type: string
+                    file:
+                      type: object
+                      properties:
+                        filename:
+                          type: string
+                        path:
+                          type: string
+      '400':
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token: Please authorize with a JWT token.
+          - Invalid userId in path: Try using a different userId and check if it is of number type.
+          - Unexpected end of form: Check Content-Type header.
+      '401':
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token: Try with a different JWT token.
+      '404':
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - File not found: Please upload a file.
+      '415':
+        description: |
+          **Unsupported Media Type**  
+          *Possible Reasons:*
+          - File is not an image: Try uploading a file of image type.
+          - Unsupported image format: Try uploading a file of another image type.
+      '417':
+        description: |
+          **Expectation Failed**  
+          *Possible Reasons:*
+          - Expected field not found: Check the request body for correct fieldname.
+      '500':
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors

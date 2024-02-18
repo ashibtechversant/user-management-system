@@ -21,7 +21,7 @@ module.exports = {
     if (Number.isNaN(numParamsUserId))
       throw createHttpError.BadRequest('user id is not a number');
     if (!payloadUserId)
-      throw createHttpError.InternalServerError('user id is missing');
+      throw createHttpError.Unauthorized('user id is missing');
     if (payloadUserId !== numParamsUserId)
       throw createHttpError.Forbidden(
         'you are not authorized to access this page'

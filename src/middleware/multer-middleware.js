@@ -5,17 +5,15 @@ const { validateUserId } = require('../utils/helpers/controllers/users');
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, next) => {
-  const { userId: paramsUserId } = req.params;
-  const { userId: payloadUserId } = req.payload;
   try {
+    const { userId: paramsUserId } = req.params;
+    const { userId: payloadUserId } = req.payload;
     validateUserId(payloadUserId, paramsUserId);
-  } catch (err) {
-    next(err);
-  }
-  if (file.mimetype.startsWith('image')) {
+    if (!file.mimetype.startsWith('image'))
+      throw createHttpError.UnsupportedMediaType('file is not an image');
     next(null, true);
-  } else {
-    next(createHttpError.BadRequest('please upload an image file'));
+  } catch (error) {
+    next(error);
   }
 };
 

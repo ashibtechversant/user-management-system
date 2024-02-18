@@ -1,9 +1,10 @@
 const fs = require('fs');
+const createHttpError = require('http-errors');
 const sharp = require('sharp');
 
 module.exports = async (req, _, next) => {
   try {
-    if (!req.file) return next();
+    if (!req.file) throw createHttpError.NotFound('file not found');
     const filename = `user-${req.payload.userId}-${Date.now()}.jpeg`;
     const dir = 'uploads/images/users/profile-pictures';
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -14,8 +15,8 @@ module.exports = async (req, _, next) => {
       .jpeg({ quality: 90 })
       .toFile(path);
     req.file = { filename, path };
-    return next();
+    next();
   } catch (error) {
-    return next(error);
+    next(error);
   }
 };

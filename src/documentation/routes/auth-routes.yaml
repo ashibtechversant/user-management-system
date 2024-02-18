@@ -30,24 +30,40 @@ tags:
                 data:
                   type: object
                   properties:
-                    accessToken:
-                      type: string
-                      description: jwt access token
-                    refreshToken:
-                      type: string
-                      description: jwt refresh token
-                    role:
-                      type: string
-                      enum: [admin, agent, supervisor, qc, qa]
-                      description: Role type of user
+                    user:
+                      type: object
+                      properties:
+                        accessToken:
+                          type: string
+                          description: jwt access token
+                        refreshToken:
+                          type: string
+                          description: jwt refresh token
+                        role:
+                          type: string
+                          enum: [admin, agent, supervisor, qc, qa]
+                          description: Role type of user
       '401':
-        description: Unauthorized - Invalid email or password
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid email or password: Try checking email and password.
       '404':
-        description: Not Found - User not found
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found. Try with a different jwt token.
       '422':
-        description: Unprocessable Entity - Check the request body
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed. Try checking the request body.
       '500':
-        description: Internal Server Error - Couldn't connect to the server
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
 /auth/refresh-token:
   post:
     summary: Get a new pair of access and refresh tokens
@@ -81,15 +97,28 @@ tags:
                 data:
                   type: object
                   properties:
-                    accessToken:
-                      type: string
-                      description: New access token
-                    refreshToken:
-                      type: string
-                      description: New refresh token
+                    user:
+                      type: object
+                      properties:
+                        accessToken:
+                          type: string
+                          description: New access token
+                        refreshToken:
+                          type: string
+                          description: New refresh token
       '400':
-        description: Bad Request - Missing refresh token
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*  
+          - Missing refresh token: Try adding jwt refresh token in request body.
       '401':
-        description: Unauthorized - Invalid or missing token
+        description: |
+          **Unauthorized**   
+          *Possible Reasons:*
+          - Invalid token: Try with a different jwt refresh token.
       '500':
-        description: Internal Server Error - Couldn't connect to the server
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors

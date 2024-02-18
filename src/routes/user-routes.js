@@ -4,6 +4,7 @@ const authMiddleware = require('../middleware/authentication-middleware');
 const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-middleware');
 const multerMiddleware = require('../middleware/multer-middleware');
 const resizeImageMiddleware = require('../middleware/resize-image-middleware');
+const multerErrorMiddleware = require('../middleware/multer-error-middleware');
 
 const router = express.Router();
 
@@ -19,13 +20,17 @@ router
 router
   .route('/:userId/password')
   .put(userController.changePassword)
-  .patch(userController.changePassword);
+  .patch(userController.changePassword)
+  .all(methodNotAllowedMiddleware);
 
-router.post(
-  '/:userId/profile-picture',
-  multerMiddleware.single('file'),
-  resizeImageMiddleware,
-  userController.uploadImage
-);
+router
+  .route('/:userId/profile-picture')
+  .post(
+    multerMiddleware.single('file'),
+    resizeImageMiddleware,
+    userController.uploadImage,
+    multerErrorMiddleware
+  )
+  .all(methodNotAllowedMiddleware);
 
 module.exports = router;
