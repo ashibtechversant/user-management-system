@@ -15,9 +15,6 @@ components:
           type: string
           enum: [agent, supervisor, qc, qa, admin]
           description: Type of role of the user
-        profilePictureUrl:
-          type: string
-          description: Profile picture url path of the user
         password:
           type: string
           minLength: 8
