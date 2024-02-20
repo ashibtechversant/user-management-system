@@ -1,7 +1,12 @@
 const Joi = require('joi');
 
 module.exports = Joi.object({
-  fullName: Joi.string().min(3).required(),
+  firstName: Joi.string()
+    .pattern(/^[a-zA-Z ]+$/)
+    .required(),
+  lastName: Joi.string()
+    .pattern(/^[a-zA-Z ]+$/)
+    .required(),
   email: Joi.string().email().lowercase().required(),
   role: Joi.string()
     .valid('admin', 'agent', 'supervisor', 'qc', 'qa')

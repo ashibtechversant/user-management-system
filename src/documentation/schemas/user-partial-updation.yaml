@@ -3,14 +3,18 @@ components:
     User Partial Updation:
       type: object
       properties:
-        fullName:
+        firstName:
           type: string
-          minLength: 3
-          description: Full Name of the user
-        role:
+          pattern: '^[a-zA-Z ]+$'
+          description: First Name of the user
+        lastName:
           type: string
-          enum: [admin, agent, supervisor, qc, qa]
-          description: Type of role of the user
+          pattern: '^[a-zA-Z ]+$'
+          description: Last Name of the user
         profilePictureUrl:
           type: string
           description: Profile picture url path of the user
+      required:
+        - firstName
+        - lastName
+        - profilePictureUrl

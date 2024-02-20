@@ -3,10 +3,14 @@ components:
     User Registration and Updation (Admin):
       type: object
       properties:
-        fullName:
+        firstName:
           type: string
-          minLength: 3
-          description: Full Name of the user
+          pattern: '^[a-zA-Z ]+$'
+          description: First Name of the user
+        lastName:
+          type: string
+          pattern: '^[a-zA-Z ]+$'
+          description: Last Name of the user
         email:
           type: string
           format: email
@@ -21,7 +25,8 @@ components:
           pattern: '^[a-zA-Z0-9]{3,30}$'
           description: Password to login as user
       required:
-        - fullName
+        - firstName
+        - lastName
         - email
         - role
         - password
