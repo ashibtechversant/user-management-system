@@ -5,7 +5,7 @@ module.exports = {
   validateUser(userId) {
     const id = Number(userId);
     if (Number.isNaN(id))
-      throw createHttpError.BadRequest('user id is not a number');
+      throw createHttpError.BadRequest('invalid userId in path');
     const userIndex = users.findIndex((user) => user.id === id);
     if (userIndex === -1) throw createHttpError.NotFound('user not found');
     const user = users[userIndex];
@@ -19,12 +19,9 @@ module.exports = {
   validateUserId(payloadUserId, paramsUserId) {
     const numParamsUserId = Number(paramsUserId);
     if (Number.isNaN(numParamsUserId))
-      throw createHttpError.BadRequest('user id is not a number');
-    if (!payloadUserId)
-      throw createHttpError.Unauthorized('user id is missing');
+      throw createHttpError.BadRequest('invalid userId in path');
+    if (!payloadUserId) throw createHttpError.Unauthorized('invalid token');
     if (payloadUserId !== numParamsUserId)
-      throw createHttpError.Forbidden(
-        'you are not authorized to access this page'
-      );
+      throw createHttpError.Forbidden('authorization failed');
   },
 };

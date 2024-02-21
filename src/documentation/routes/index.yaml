@@ -21,3 +21,13 @@ tags:
                 message:
                   type: string
                   description: Description of the response
+      '404':
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.

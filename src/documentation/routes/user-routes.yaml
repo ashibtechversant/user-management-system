@@ -52,6 +52,12 @@
           **Not Found**  
           *Possible Reasons:*
           - User not found: Try with a different JWT token.
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '500':
         description: |
           **Internal Server Error**  
@@ -118,6 +124,12 @@
           **Not Found**  
           *Possible Reasons:*
           - User not found: Try with a different JWT token.
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '409':
         description: |
           **Conflict**  
@@ -194,6 +206,12 @@
           **Not Found**  
           *Possible Reasons:*
           - User not found: Try with a different JWT token.
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '409':
         description: |
           **Conflict**  
@@ -273,6 +291,12 @@
           **Not Found**  
           *Possible Reasons:*
           - User not found: Try with a different JWT token.
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '422':
         description: |
           **Unprocessable Entity**  
@@ -345,6 +369,12 @@
           **Not Found**  
           *Possible Reasons:*
           - User not found: Try with a different JWT token.
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '422':
         description: |
           **Unprocessable Entity**  
@@ -420,6 +450,12 @@
           **Not Found**  
           *Possible Reasons:*
           - File not found: Please upload a file.
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '415':
         description: |
           **Unsupported Media Type**  

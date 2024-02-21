@@ -50,6 +50,12 @@ tags:
           **Not Found**  
           *Possible Reasons:*
           - User not found. Try with a different jwt token.
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '500':
         description: |
           **Internal Server Error**  
@@ -103,6 +109,16 @@ tags:
           **Forbidden**  
           *Possible Reasons:*
           - Admin authorization failed. Use a token with admin privilege.
+      '404':
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '409':
         description: |
           **Conflict**  
@@ -174,6 +190,12 @@ tags:
           **Not Found**  
           *Possible Reasons:*
           - User not found. Try with a different jwt token.
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '409':
         description: |
           **Conflict**  
@@ -250,6 +272,12 @@ tags:
           **Not Found**  
           *Possible Reasons:*
           - User not found. Try with a different jwt token.
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '409':
         description: |
           **Conflict**  
@@ -326,6 +354,12 @@ tags:
           **Not Found**  
           *Possible Reasons:*
           - User not found. Try with a different jwt token.
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '409':
         description: |
           **Conflict**  
@@ -390,6 +424,12 @@ tags:
           **Not Found**  
           *Possible Reasons:*
           - User not found. Try with a different jwt token.
+          - Path is incorrect. Check API path and try again.
+      '405':
+        description: |
+          *Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed. Check HTTP method and try again.
       '500':
         description: |
           **Internal Server Error**  

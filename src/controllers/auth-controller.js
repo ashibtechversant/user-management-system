@@ -42,7 +42,8 @@ module.exports = {
   async refreshToken(req, res, next) {
     try {
       const { refreshToken } = req.body;
-      if (!refreshToken) throw createHttpError.BadRequest();
+      if (!refreshToken)
+        throw createHttpError.BadRequest('missing refresh token');
       try {
         const { userId } = verifyRefreshToken(refreshToken);
         const accessToken = generateToken(userId);
@@ -53,7 +54,7 @@ module.exports = {
         };
         res.status(201).json(responseFormatter('tokens refreshed'), { user });
       } catch (error) {
-        throw createHttpError.Unauthorized();
+        throw createHttpError.Unauthorized('invalid token');
       }
     } catch (error) {
       next(error);
