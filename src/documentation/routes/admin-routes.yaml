@@ -34,28 +34,28 @@ tags:
         description: |
           **Bad Request**  
           *Possible Reasons:*
-          - Missing token. Please authorize with a jwt token.
+          - Missing token: Please authorize with a jwt token.
       '401':
         description: |
           **Unauthorized**  
           *Possible Reasons:*
-          - Invalid token. Try with a different jwt token.
+          - Invalid token: Try with a different jwt token.
       '403':
         description: |
           **Forbidden**  
           *Possible Reasons:*
-          - Admin authorization failed. Use a token with admin privilege.
+          - Admin authorization failed: Use a token with admin privilege.
       '404':
         description: |
           **Not Found**  
           *Possible Reasons:*
-          - User not found. Try with a different jwt token.
-          - Path is incorrect. Check API path and try again.
+          - User not found: Try with a different jwt token.
+          - Path is incorrect: Check API path and try again.
       '405':
         description: |
           *Method Not Allowed**  
           *Possible Reasons:*
-          - Method is not allowed. Check HTTP method and try again.
+          - Method is not allowed: Check HTTP method and try again.
       '500':
         description: |
           **Internal Server Error**  
@@ -98,37 +98,37 @@ tags:
         description: |
           **Bad Request**  
           *Possible Reasons:*
-          - Missing token. Please authorize with a jwt token.
+          - Missing token: Please authorize with a jwt token.
       '401':
         description: |
           **Unauthorized**  
           *Possible Reasons:*
-          - Invalid token. Try with a different jwt token.
+          - Invalid token: Try with a different jwt token.
       '403':
         description: |
           **Forbidden**  
           *Possible Reasons:*
-          - Admin authorization failed. Use a token with admin privilege.
+          - Admin authorization failed: Use a token with admin privilege.
       '404':
         description: |
           **Not Found**  
           *Possible Reasons:*
-          - Path is incorrect. Check API path and try again.
+          - Path is incorrect: Check API path and try again.
       '405':
         description: |
           *Method Not Allowed**  
           *Possible Reasons:*
-          - Method is not allowed. Check HTTP method and try again.
+          - Method is not allowed: Check HTTP method and try again.
       '409':
         description: |
           **Conflict**  
           *Possible Reasons:*
-          - Email has already been registered. Try using a different email.
+          - Email has already been registered: Try using a different email.
       '422':
         description: |
           **Unprocessable Entity**  
           *Possible Reasons:*
-          - Validation failed. Try checking the request body.
+          - Validation failed: Try checking the request body.
       '500':
         description: |
           **Internal Server Error**  
@@ -173,39 +173,39 @@ tags:
         description: |
           **Bad Request**  
           *Possible Reasons:*
-          - Missing token. Please authorize with a jwt token. 
-          - Invalid userId in path. Try using a different userId and check if it is of number type.
+          - Missing token: Please authorize with a jwt token.
+          - Invalid userId in path: Try using a different userId and check if it is of number type.
       '401':
         description: |
           **Unauthorized**  
           *Possible Reasons:*
-          - Invalid token. Try with a different jwt token.
+          - Invalid token: Try with a different jwt token.
       '403':
         description: |
           **Forbidden**  
           *Possible Reasons:*
-          - Admin authorization failed. Use a token with admin privilege.
+          - Admin authorization failed: Use a token with admin privilege.
       '404':
         description: |
           **Not Found**  
           *Possible Reasons:*
-          - User not found. Try with a different jwt token.
-          - Path is incorrect. Check API path and try again.
+          - User not found: Try with a different jwt token.
+          - Path is incorrect: Check API path and try again.
       '405':
         description: |
           *Method Not Allowed**  
           *Possible Reasons:*
-          - Method is not allowed. Check HTTP method and try again.
+          - Method is not allowed: Check HTTP method and try again.
       '409':
         description: |
           **Conflict**  
           *Possible Reasons:*
-          - Email has already been registered. Try using a different email.
+          - Email has already been registered: Try using a different email.
       '422':
         description: |
           **Unprocessable Entity**  
           *Possible Reasons:*
-          - Validation failed. Try checking the request body.
+          - Validation failed: Try checking the request body.
       '500':
         description: |
           **Internal Server Error**  
@@ -255,39 +255,39 @@ tags:
         description: |
           **Bad Request**  
           *Possible Reasons:*
-          - Missing token. Please authorize with a jwt token. 
-          - Invalid userId in path. Try using a different userId and check if it is of number type.
+          - Missing token: Please authorize with a jwt token.
+          - Invalid userId in path: Try using a different userId and check if it is of number type.
       '401':
         description: |
           **Unauthorized**  
           *Possible Reasons:*
-          - Invalid token. Try with a different jwt token.
+          - Invalid token: Try with a different jwt token.
       '403':
         description: |
           **Forbidden**  
           *Possible Reasons:*
-          - Admin authorization failed. Use a token with admin privilege.
+          - Admin authorization failed: Use a token with admin privilege.
       '404':
         description: |
           **Not Found**  
           *Possible Reasons:*
-          - User not found. Try with a different jwt token.
-          - Path is incorrect. Check API path and try again.
+          - User not found: Try with a different jwt token.
+          - Path is incorrect: Check API path and try again.
       '405':
         description: |
           *Method Not Allowed**  
           *Possible Reasons:*
-          - Method is not allowed. Check HTTP method and try again.
+          - Method is not allowed: Check HTTP method and try again.
       '409':
         description: |
           **Conflict**  
           *Possible Reasons:*
-          - Email has already been registered. Try using a different email.
+          - Email has already been registered: Try using a different email.
       '422':
         description: |
           **Unprocessable Entity**  
           *Possible Reasons:*
-          - Validation failed. Try checking the request body.
+          - Validation failed: Try checking the request body.
       '500':
         description: |
           **Internal Server Error**  
@@ -337,39 +337,39 @@ tags:
         description: |
           **Bad Request**  
           *Possible Reasons:*
-          - Missing token. Please authorize with a jwt token. 
-          - Invalid userId in path. Try using a different userId and check if it is of number type.
+          - Missing token: Please authorize with a jwt token.
+          - Invalid userId in path: Try using a different userId and check if it is of number type.
       '401':
         description: |
           **Unauthorized**  
           *Possible Reasons:*
-          - Invalid token. Try with a different jwt token.
+          - Invalid token: Try with a different jwt token.
       '403':
         description: |
           **Forbidden**  
           *Possible Reasons:*
-          - Admin authorization failed. Use a token with admin privilege.
+          - Admin authorization failed: Use a token with admin privilege.
       '404':
         description: |
           **Not Found**  
           *Possible Reasons:*
-          - User not found. Try with a different jwt token.
-          - Path is incorrect. Check API path and try again.
+          - User not found: Try with a different jwt token.
+          - Path is incorrect: Check API path and try again.
       '405':
         description: |
           *Method Not Allowed**  
           *Possible Reasons:*
-          - Method is not allowed. Check HTTP method and try again.
+          - Method is not allowed: Check HTTP method and try again.
       '409':
         description: |
           **Conflict**  
           *Possible Reasons:*
-          - Email has already been registered. Try using a different email.
+          - Email has already been registered: Try using a different email.
       '422':
         description: |
           **Unprocessable Entity**  
           *Possible Reasons:*
-          - Validation failed. Try checking the request body.
+          - Validation failed: Try checking the request body.
       '500':
         description: |
           **Internal Server Error**  
@@ -407,29 +407,29 @@ tags:
         description: |
           **Bad Request**  
           *Possible Reasons:*
-          - Missing token. Please authorize with a jwt token. 
-          - Invalid userId in path. Try using a different userId and check if it is of number type.
+          - Missing token: Please authorize with a jwt token.
+          - Invalid userId in path: Try using a different userId and check if it is of number type.
       '401':
         description: |
           **Unauthorized**  
           *Possible Reasons:*
-          - Invalid token. Try with a different jwt token.
+          - Invalid token: Try with a different jwt token.
       '403':
         description: |
           **Forbidden**  
           *Possible Reasons:*
-          - Admin authorization failed. Use a token with admin privilege.
+          - Admin authorization failed: Use a token with admin privilege.
       '404':
         description: |
           **Not Found**  
           *Possible Reasons:*
-          - User not found. Try with a different jwt token.
-          - Path is incorrect. Check API path and try again.
+          - User not found: Try with a different jwt token.
+          - Path is incorrect: Check API path and try again.
       '405':
         description: |
           *Method Not Allowed**  
           *Possible Reasons:*
-          - Method is not allowed. Check HTTP method and try again.
+          - Method is not allowed: Check HTTP method and try again.
       '500':
         description: |
           **Internal Server Error**  

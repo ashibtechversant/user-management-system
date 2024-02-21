@@ -47,22 +47,23 @@ tags:
         description: |
           **Unauthorized**  
           *Possible Reasons:*
-          - Invalid email or password: Try checking email and password.
+          - Incorrect password: Try checking password.
       '404':
         description: |
           **Not Found**  
           *Possible Reasons:*
-          - Path is incorrect. Check API path and try again.
+          - User not found: Try with a different email.
+          - Path is incorrect: Check API path and try again.
       '405':
         description: |
           *Method Not Allowed**  
           *Possible Reasons:*
-          - Method is not allowed. Check HTTP method and try again.
+          - Method is not allowed: Check HTTP method and try again.
       '422':
         description: |
           **Unprocessable Entity**  
           *Possible Reasons:*
-          - Validation failed. Try checking the request body.
+          - Validation failed: Try checking the request body.
       '500':
         description: |
           **Internal Server Error**  
@@ -125,12 +126,12 @@ tags:
         description: |
           **Not Found**  
           *Possible Reasons:*
-          - Path is incorrect. Check API path and try again.
+          - Path is incorrect: Check API path and try again.
       '405':
         description: |
           *Method Not Allowed**  
           *Possible Reasons:*
-          - Method is not allowed. Check HTTP method and try again.
+          - Method is not allowed: Check HTTP method and try again.
       '500':
         description: |
           **Internal Server Error**  

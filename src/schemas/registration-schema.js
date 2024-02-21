@@ -13,6 +13,6 @@ module.exports = Joi.object({
     .required(),
   password: Joi.string()
     .min(8)
-    .pattern(/^[a-zA-Z0-9]{3,30}$/)
+    .pattern(/^[a-zA-Z0-9]{8,30}$/)
     .required(),
 });

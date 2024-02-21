@@ -7,5 +7,5 @@ module.exports = Joi.object({
   role: Joi.string().valid('admin', 'agent', 'supervisor', 'qc', 'qa'),
   password: Joi.string()
     .min(8)
-    .pattern(/^[a-zA-Z0-9]{3,30}$/),
+    .pattern(/^[a-zA-Z0-9]{8,30}$/),
 });

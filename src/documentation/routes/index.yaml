@@ -25,9 +25,9 @@ tags:
         description: |
           **Not Found**  
           *Possible Reasons:*
-          - Path is incorrect. Check API path and try again.
+          - Path is incorrect: Check API path and try again.
       '405':
         description: |
           *Method Not Allowed**  
           *Possible Reasons:*
-          - Method is not allowed. Check HTTP method and try again.
+          - Method is not allowed: Check HTTP method and try again.
