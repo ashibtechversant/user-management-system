@@ -28,6 +28,6 @@ tags:
           - Path is incorrect: Check API path and try again.
       '405':
         description: |
-          *Method Not Allowed**  
+          **Method Not Allowed**  
           *Possible Reasons:*
           - Method is not allowed: Check HTTP method and try again.
