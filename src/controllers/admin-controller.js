@@ -13,21 +13,19 @@ const writeUsers = require('../utils/helpers/data/write-users');
 module.exports = {
   async registerUsers(req, res, next) {
     try {
-      const result = await registrationSchema.validateAsync(req.body);
-      handleDuplicateEmail(result.email);
-      const hashedPassword = await hashPassword(result.password);
-      const finalResult = {
+      const registrationData = await registrationSchema.validateAsync(req.body);
+      handleDuplicateEmail(registrationData.email);
+      const hashedPassword = await hashPassword(registrationData.password);
+      const newUser = {
         id: users.length + 1,
-        ...result,
+        ...registrationData,
         password: hashedPassword,
       };
-      users.push(finalResult);
+      users.push(newUser);
       await writeUsers(users);
       res
         .status(201)
-        .json(
-          responseFormatter('registration successful', { user: finalResult })
-        );
+        .json(responseFormatter('registration successful', { user: newUser }));
     } catch (error) {
       handleJoiError(error, next);
     }
@@ -72,25 +70,25 @@ module.exports = {
       const { user, userIndex } = validateUser(userId);
       const schema =
         method === 'PUT' ? registrationSchema : adminUserUpdateSchema;
-      const result = await schema.validateAsync(req.body);
-      if (result.email && result.email !== user.email)
-        handleDuplicateEmail(result.email);
-      if (result.password)
-        result.password = await hashPassword(result.password);
-      const finalResult =
+      const updationData = await schema.validateAsync(req.body);
+      if (updationData.email && updationData.email !== user.email)
+        handleDuplicateEmail(updationData.email);
+      if (updationData.password)
+        updationData.password = await hashPassword(updationData.password);
+      const updatedUser =
         method === 'PUT'
-          ? { id: userIndex + 1, ...result }
-          : { ...user, ...result };
-      if (JSON.stringify(user) === JSON.stringify(finalResult))
+          ? { id: userIndex + 1, ...updationData }
+          : { ...user, ...updationData };
+      if (JSON.stringify(user) === JSON.stringify(updatedUser))
         return res.json(
           responseFormatter('no changes were found for updation', {
             user,
           })
         );
-      users.splice(userIndex, 1, finalResult);
+      users.splice(userIndex, 1, updatedUser);
       await writeUsers(users);
       return res.json(
-        responseFormatter('user updated successfully', { user: finalResult })
+        responseFormatter('user updated successfully', { user: updatedUser })
       );
     } catch (error) {
       return handleJoiError(error, next);

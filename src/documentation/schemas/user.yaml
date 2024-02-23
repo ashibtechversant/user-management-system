@@ -25,14 +25,8 @@ components:
         profilePictureUrl:
           type: string
           description: Profile picture url path of the user
-        password:
-          type: string
-          minLength: 8
-          pattern: '^[a-zA-Z0-9]{8,30}$'
-          description: Password to login as user
       required:
         - firstName
         - lastName
         - email
         - role
-        - password

@@ -15,4 +15,9 @@ router
   .post(authController.refreshToken)
   .all(methodNotAllowedMiddleware);
 
+router
+  .route('/forgot-password')
+  .post(authController.forgotPassword)
+  .all(methodNotAllowedMiddleware);
+
 module.exports = router;

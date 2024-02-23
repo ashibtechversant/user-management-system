@@ -36,21 +36,19 @@ module.exports = {
       const { user, userIndex } = validateUser(paramsUserId);
       validateUserId(payloadUserId, paramsUserId);
       const schema = method === 'PUT' ? updateSchema : updatePartialSchema;
-      const result = await schema.validateAsync(req.body);
-      const finalResult =
+      const updationData = await schema.validateAsync(req.body);
+      const updatedUser =
         method === 'PUT'
-          ? { id: userIndex + 1, ...result }
-          : { ...user, ...result };
-      if (JSON.stringify(user) === JSON.stringify(finalResult))
+          ? { id: userIndex + 1, ...updationData }
+          : { ...user, ...updationData };
+      if (JSON.stringify(user) === JSON.stringify(updatedUser))
         return res.json(
-          responseFormatter('no changes were found for updation', {
-            user,
-          })
+          responseFormatter('no changes were found for updation', { user })
         );
-      users.splice(userIndex, 1, finalResult);
+      users.splice(userIndex, 1, updatedUser);
       await writeUsers(users);
       return res.json(
-        responseFormatter('user updated successfully', { user: finalResult })
+        responseFormatter('user updated successfully', { user: updatedUser })
       );
     } catch (error) {
       return handleJoiError(error, next);
@@ -62,25 +60,25 @@ module.exports = {
       const { userId: paramsUserId } = req.params;
       const { userId: payloadUserId } = req.payload;
       validateUserId(payloadUserId, paramsUserId);
-      const result = await passwordSchema.validateAsync(req.body);
+      const passwordData = await passwordSchema.validateAsync(req.body);
       const { user, userIndex } = validateUser(payloadUserId);
       const isPasswordValid = await checkPassword(
-        result.currentPassword,
+        passwordData.currentPassword,
         user.password
       );
       if (!isPasswordValid)
         throw createHttpError.BadRequest('incorrect password');
-      const hashedPassword = await hashPassword(result.newPassword);
-      const finalResult = { ...user, password: hashedPassword };
+      const hashedPassword = await hashPassword(passwordData.newPassword);
+      const updatedUser = { ...user, password: hashedPassword };
       if (hashedPassword === user.password)
         return res.json(
           responseFormatter('no changes were made to the password', { user })
         );
-      users.splice(userIndex, 1, finalResult);
+      users.splice(userIndex, 1, updatedUser);
       await writeUsers(users);
       return res.json(
         responseFormatter('password updated successfully', {
-          user: finalResult,
+          user: updatedUser,
         })
       );
     } catch (error) {

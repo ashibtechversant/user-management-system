@@ -1,12 +1,7 @@
 const express = require('express');
-const dotenv = require('dotenv');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const apiRouter = require('./routes');
-
-// Load environment variables
-dotenv.config();
-dotenv.config({ path: '.env.local' });
 
 const { port, nodeEnv } = require('../config');
 const logger = require('./utils/winston-utils');
@@ -14,7 +9,6 @@ const swaggerSpec = require('./utils/swagger-utils');
 const notFoundMiddleware = require('./middleware/not-found-middleware');
 const errorHandlerMiddleware = require('./middleware/error-handler-middleware');
 const morganMiddleware = require('./middleware/morgan-middleware');
-
 // Setup
 const app = express();
 

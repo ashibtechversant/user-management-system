@@ -9,7 +9,7 @@ module.exports = {
     return jwt.verify(token, jwtSecretKey);
   },
   generateRefreshToken(userId) {
-    return jwt.sign({ userId }, jwtSecretRefreshKey, { expiresIn: '1y' });
+    return jwt.sign({ userId }, jwtSecretRefreshKey, { expiresIn: '30 days' });
   },
   verifyRefreshToken(token) {
     return jwt.verify(token, jwtSecretRefreshKey);
