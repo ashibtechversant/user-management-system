@@ -1,14 +1,16 @@
 const express = require('express');
 const userController = require('../controllers/user-controller');
-const authMiddleware = require('../middleware/authentication-middleware');
+const authenticatioMiddleware = require('../middleware/authentication-middleware');
 const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-middleware');
 const multerMiddleware = require('../middleware/multer-middleware');
 const resizeImageMiddleware = require('../middleware/resize-image-middleware');
 const multerErrorMiddleware = require('../middleware/multer-error-middleware');
+const authorizationMiddleware = require('../middleware/authorization-middleware');
 
 const router = express.Router();
 
-router.use(authMiddleware);
+router.use(authenticatioMiddleware);
+router.use(authorizationMiddleware('agent'));
 
 router
   .route('/:userId')

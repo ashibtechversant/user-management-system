@@ -1,9 +1,7 @@
 const createHttpError = require('http-errors');
 const users = require('../../data/users.json');
-const {
-  validateUser,
-  validateUserId,
-} = require('../utils/helpers/controllers/users');
+const validateUserIdInPath = require('../utils/helpers/controllers/users/validate-user-id-in-path');
+const validateUserIdAndToken = require('../utils/helpers/controllers/users/validate-user-id-and-token');
 const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
 const updateSchema = require('../schemas/update-schema');
 const updatePartialSchema = require('../schemas/update-partial-schema');
@@ -17,7 +15,7 @@ module.exports = {
     try {
       const { userId: payloadUserId } = req.payload;
       const { userId: paramsUserId } = req.params;
-      validateUserId(payloadUserId, paramsUserId);
+      validateUserIdAndToken(payloadUserId, paramsUserId);
       const user = users.find((e) => e.id === payloadUserId);
       if (!user) throw createHttpError.NotFound('user not found');
       res.json(
@@ -33,8 +31,8 @@ module.exports = {
       const { method } = req;
       const { userId: paramsUserId } = req.params;
       const { userId: payloadUserId } = req.payload;
-      const { user, userIndex } = validateUser(paramsUserId);
-      validateUserId(payloadUserId, paramsUserId);
+      const { user, userIndex } = validateUserIdInPath(paramsUserId);
+      validateUserIdAndToken(payloadUserId, paramsUserId);
       const schema = method === 'PUT' ? updateSchema : updatePartialSchema;
       const updationData = await schema.validateAsync(req.body);
       const updatedUser =
@@ -59,9 +57,9 @@ module.exports = {
     try {
       const { userId: paramsUserId } = req.params;
       const { userId: payloadUserId } = req.payload;
-      validateUserId(payloadUserId, paramsUserId);
+      validateUserIdAndToken(payloadUserId, paramsUserId);
       const passwordData = await passwordSchema.validateAsync(req.body);
-      const { user, userIndex } = validateUser(payloadUserId);
+      const { user, userIndex } = validateUserIdInPath(payloadUserId);
       const isPasswordValid = await checkPassword(
         passwordData.currentPassword,
         user.password

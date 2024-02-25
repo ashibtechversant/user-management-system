@@ -1,5 +1,5 @@
 const createHttpError = require('http-errors');
-const transporter = require('../../nodemailer-utils');
+const transporter = require('../../../nodemailer-utils');
 
 const emailTimeout = 20000;
 

@@ -14,4 +14,5 @@ module.exports = {
   verifyRefreshToken(token) {
     return jwt.verify(token, jwtSecretRefreshKey);
   },
+  generateOtpToken(otp,email)
 };

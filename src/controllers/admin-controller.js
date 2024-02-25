@@ -5,8 +5,8 @@ const responseFormatter = require('../utils/helpers/controllers/response-formatt
 const { hashPassword } = require('../utils/bcrypt-utils');
 const {
   handleDuplicateEmail,
-  validateUser,
-} = require('../utils/helpers/controllers/users');
+  validateUserIdInPath,
+} = require('../utils/helpers/controllers/users/users');
 const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
 const writeUsers = require('../utils/helpers/data/write-users');
 
@@ -42,7 +42,7 @@ module.exports = {
   async getUser(req, res, next) {
     try {
       const { userId } = req.params;
-      const { user } = validateUser(userId);
+      const { user } = validateUserIdInPath(userId);
       res.json(
         responseFormatter('user details retrieved successfully', { user })
       );
@@ -54,7 +54,7 @@ module.exports = {
   async deleteUser(req, res, next) {
     try {
       const { userId } = req.params;
-      const { userIndex } = validateUser(userId);
+      const { userIndex } = validateUserIdInPath(userId);
       users.splice(userIndex, 1);
       await writeUsers(users);
       res.json(responseFormatter('user deleted successfully'));
@@ -67,7 +67,7 @@ module.exports = {
     try {
       const { method } = req;
       const { userId } = req.params;
-      const { user, userIndex } = validateUser(userId);
+      const { user, userIndex } = validateUserIdInPath(userId);
       const schema =
         method === 'PUT' ? registrationSchema : adminUserUpdateSchema;
       const updationData = await schema.validateAsync(req.body);

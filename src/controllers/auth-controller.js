@@ -9,9 +9,10 @@ const {
 } = require('../utils/jwt-utils');
 const responseFormatter = require('../utils/helpers/controllers/response-formatter');
 const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
-const generateOtp = require('../utils/helpers/controllers/generate-otp');
+const generateOtp = require('../utils/helpers/controllers/auth/generate-otp');
 const writeUsers = require('../utils/helpers/data/write-users');
-const sendOtp = require('../utils/helpers/controllers/send-otp');
+const sendOtp = require('../utils/helpers/controllers/auth/send-otp');
+const verifyOtpSchema = require('../schemas/verify-otp-schema');
 
 module.exports = {
   async login(req, res, next) {
@@ -80,6 +81,14 @@ module.exports = {
       res.json(responseFormatter('otp sent successfully'));
     } catch (error) {
       next(error);
+    }
+  },
+
+  async verifyOtp(req, res, next) {
+    try {
+      const otpData = await verifyOtpSchema.validateAsync(req.body);
+    } catch (error) {
+      handleJoiError(error, next);
     }
   },
 };
