@@ -1,5 +1,9 @@
 const jwt = require('jsonwebtoken');
-const { jwtSecretKey, jwtSecretRefreshKey } = require('../../config');
+const {
+  jwtSecretKey,
+  jwtSecretRefreshKey,
+  jwtSecretOtpKey,
+} = require('../../config');
 
 module.exports = {
   generateToken(userId) {
@@ -14,5 +18,7 @@ module.exports = {
   verifyRefreshToken(token) {
     return jwt.verify(token, jwtSecretRefreshKey);
   },
-  generateOtpToken(otp,email)
+  generateOtpToken(otp) {
+    return jwt.sign({ otp }, jwtSecretOtpKey, { expiresIn: '' });
+  },
 };

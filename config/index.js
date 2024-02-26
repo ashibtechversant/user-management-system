@@ -10,8 +10,11 @@ module.exports = {
   jwtSecretKey: process.env.JWT_SECRET_KEY || 'your-secret-key',
   jwtSecretRefreshKey:
     process.env.JWT_SECRET_REFRESH_KEY || 'your-secret-refresh-key',
+  jwtSecretOtpKety: process.env.JWT_SECRET_OTP_KEY || 'your-secret-otp-key',
+  otpExpirationMinutes: process.env.OTP_EXPIRATION_MINUTES,
   smtpHost: process.env.SMTP_HOST,
   smtpPort: process.env.SMTP_PORT,
   smtpUsername: process.env.SMTP_USERNAME,
   smtpPassword: process.env.SMTP_PASSWORD,
+  emailTimeoutSeconds: process.env.EMAIL_TIMEOUT_SECONDS,
 };

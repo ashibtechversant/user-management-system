@@ -1,31 +1,34 @@
-const users = require('../../data/users.json');
 const registrationSchema = require('../schemas/registration-schema');
 const adminUserUpdateSchema = require('../schemas/admin-user-update-schema');
 const responseFormatter = require('../utils/helpers/controllers/response-formatter');
 const { hashPassword } = require('../utils/bcrypt-utils');
-const {
-  handleDuplicateEmail,
-  validateUserIdInPath,
-} = require('../utils/helpers/controllers/users/users');
+const handleDuplicateEmail = require('../utils/helpers/controllers/users/handle-duplicate-email');
+const convertUserIdInPath = require('../utils/helpers/controllers/convert-user-id-in-path');
 const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
-const writeUsers = require('../utils/helpers/data/write-users');
+const {
+  readAllUsers,
+  createUser,
+  deleteUserWithId,
+  readUserWithId,
+  updateUserWithId,
+} = require('../utils/helpers/data/manage-users');
 
 module.exports = {
   async registerUsers(req, res, next) {
     try {
       const registrationData = await registrationSchema.validateAsync(req.body);
-      handleDuplicateEmail(registrationData.email);
+      await handleDuplicateEmail(registrationData.email);
       const hashedPassword = await hashPassword(registrationData.password);
       const newUser = {
-        id: users.length + 1,
         ...registrationData,
         password: hashedPassword,
       };
-      users.push(newUser);
-      await writeUsers(users);
+      const createdUser = await createUser(newUser);
       res
         .status(201)
-        .json(responseFormatter('registration successful', { user: newUser }));
+        .json(
+          responseFormatter('registration successful', { user: createdUser })
+        );
     } catch (error) {
       handleJoiError(error, next);
     }
@@ -33,6 +36,7 @@ module.exports = {
 
   async getAllUsers(_, res, next) {
     try {
+      const users = await readAllUsers();
       res.json(responseFormatter('users retrieved successfully', { users }));
     } catch (error) {
       next(error);
@@ -42,7 +46,8 @@ module.exports = {
   async getUser(req, res, next) {
     try {
       const { userId } = req.params;
-      const { user } = validateUserIdInPath(userId);
+      const convertedUserId = convertUserIdInPath(userId);
+      const user = await readUserWithId(convertedUserId);
       res.json(
         responseFormatter('user details retrieved successfully', { user })
       );
@@ -54,9 +59,8 @@ module.exports = {
   async deleteUser(req, res, next) {
     try {
       const { userId } = req.params;
-      const { userIndex } = validateUserIdInPath(userId);
-      users.splice(userIndex, 1);
-      await writeUsers(users);
+      const convertedUserId = convertUserIdInPath(userId);
+      await deleteUserWithId(convertedUserId);
       res.json(responseFormatter('user deleted successfully'));
     } catch (error) {
       next(error);
@@ -67,26 +71,22 @@ module.exports = {
     try {
       const { method } = req;
       const { userId } = req.params;
-      const { user, userIndex } = validateUserIdInPath(userId);
+      const convertedUserId = convertUserIdInPath(userId);
       const schema =
         method === 'PUT' ? registrationSchema : adminUserUpdateSchema;
       const updationData = await schema.validateAsync(req.body);
+      const user = await readUserWithId(convertedUserId);
       if (updationData.email && updationData.email !== user.email)
-        handleDuplicateEmail(updationData.email);
+        await handleDuplicateEmail(updationData.email);
       if (updationData.password)
         updationData.password = await hashPassword(updationData.password);
-      const updatedUser =
-        method === 'PUT'
-          ? { id: userIndex + 1, ...updationData }
-          : { ...user, ...updationData };
+      const updatedUser = await updateUserWithId(convertedUserId, updationData);
       if (JSON.stringify(user) === JSON.stringify(updatedUser))
         return res.json(
           responseFormatter('no changes were found for updation', {
             user,
           })
         );
-      users.splice(userIndex, 1, updatedUser);
-      await writeUsers(users);
       return res.json(
         responseFormatter('user updated successfully', { user: updatedUser })
       );

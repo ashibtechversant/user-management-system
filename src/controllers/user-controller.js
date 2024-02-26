@@ -1,23 +1,23 @@
 const createHttpError = require('http-errors');
-const users = require('../../data/users.json');
-const validateUserIdInPath = require('../utils/helpers/controllers/users/validate-user-id-in-path');
-const validateUserIdAndToken = require('../utils/helpers/controllers/users/validate-user-id-and-token');
+const convertUserIdInPath = require('../utils/helpers/controllers/convert-user-id-in-path');
 const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
 const updateSchema = require('../schemas/update-schema');
 const updatePartialSchema = require('../schemas/update-partial-schema');
 const passwordSchema = require('../schemas/password-schema');
 const { hashPassword, checkPassword } = require('../utils/bcrypt-utils');
-const writeUsers = require('../utils/helpers/data/write-users');
 const responseFormatter = require('../utils/helpers/controllers/response-formatter');
+const {
+  readUserWithId,
+  updateUserWithId,
+} = require('../utils/helpers/data/manage-users');
 
 module.exports = {
   async getUser(req, res, next) {
     try {
       const { userId: payloadUserId } = req.payload;
       const { userId: paramsUserId } = req.params;
-      validateUserIdAndToken(payloadUserId, paramsUserId);
-      const user = users.find((e) => e.id === payloadUserId);
-      if (!user) throw createHttpError.NotFound('user not found');
+      convertUserIdInPath(paramsUserId);
+      const user = await readUserWithId(payloadUserId);
       res.json(
         responseFormatter('user details retrieved successfully', { user })
       );
@@ -31,20 +31,15 @@ module.exports = {
       const { method } = req;
       const { userId: paramsUserId } = req.params;
       const { userId: payloadUserId } = req.payload;
-      const { user, userIndex } = validateUserIdInPath(paramsUserId);
-      validateUserIdAndToken(payloadUserId, paramsUserId);
+      convertUserIdInPath(paramsUserId);
       const schema = method === 'PUT' ? updateSchema : updatePartialSchema;
       const updationData = await schema.validateAsync(req.body);
-      const updatedUser =
-        method === 'PUT'
-          ? { id: userIndex + 1, ...updationData }
-          : { ...user, ...updationData };
+      const user = await readUserWithId(payloadUserId);
+      const updatedUser = await updateUserWithId(payloadUserId, updationData);
       if (JSON.stringify(user) === JSON.stringify(updatedUser))
         return res.json(
           responseFormatter('no changes were found for updation', { user })
         );
-      users.splice(userIndex, 1, updatedUser);
-      await writeUsers(users);
       return res.json(
         responseFormatter('user updated successfully', { user: updatedUser })
       );
@@ -57,9 +52,9 @@ module.exports = {
     try {
       const { userId: paramsUserId } = req.params;
       const { userId: payloadUserId } = req.payload;
-      validateUserIdAndToken(payloadUserId, paramsUserId);
+      convertUserIdInPath(paramsUserId);
       const passwordData = await passwordSchema.validateAsync(req.body);
-      const { user, userIndex } = validateUserIdInPath(payloadUserId);
+      const user = await readUserWithId(payloadUserId);
       const isPasswordValid = await checkPassword(
         passwordData.currentPassword,
         user.password
@@ -67,13 +62,12 @@ module.exports = {
       if (!isPasswordValid)
         throw createHttpError.BadRequest('incorrect password');
       const hashedPassword = await hashPassword(passwordData.newPassword);
-      const updatedUser = { ...user, password: hashedPassword };
       if (hashedPassword === user.password)
         return res.json(
           responseFormatter('no changes were made to the password', { user })
         );
-      users.splice(userIndex, 1, updatedUser);
-      await writeUsers(users);
+      const updationData = { password: hashedPassword };
+      const updatedUser = await updateUserWithId(payloadUserId, updationData);
       return res.json(
         responseFormatter('password updated successfully', {
           user: updatedUser,

@@ -1,7 +1,6 @@
 const createHttpError = require('http-errors');
 const transporter = require('../../../nodemailer-utils');
-
-const emailTimeout = 20000;
+const { emailTimeoutSeconds } = require('../../../../../config');
 
 module.exports = async (email, otp) => {
   await Promise.race([
@@ -17,7 +16,7 @@ Team UMS`,
     new Promise((_, reject) => {
       setTimeout(
         reject,
-        emailTimeout,
+        emailTimeoutSeconds,
         createHttpError.GatewayTimeout('email sending timed out')
       );
     }),

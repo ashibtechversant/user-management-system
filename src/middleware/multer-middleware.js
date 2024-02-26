@@ -1,16 +1,10 @@
 const createHttpError = require('http-errors');
 const multer = require('multer');
-const {
-  validateUserIdAndToken,
-} = require('../utils/helpers/controllers/users');
 
 const storage = multer.memoryStorage();
 
-const fileFilter = (req, file, next) => {
+const fileFilter = (_, file, next) => {
   try {
-    const { userId: paramsUserId } = req.params;
-    const { userId: payloadUserId } = req.payload;
-    validateUserIdAndToken(payloadUserId, paramsUserId);
     if (!file.mimetype.startsWith('image'))
       throw createHttpError.UnsupportedMediaType('file is not an image');
     next(null, true);
