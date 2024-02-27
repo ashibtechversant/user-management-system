@@ -9,10 +9,12 @@ async function writeUsers(users) {
 
 module.exports = {
   async createUser(user) {
+    const id = new Date().getTime();
     const users = await module.exports.readAllUsers();
-    users.push({ id: users.length + 1, ...user });
+    const newUser = { id, ...user };
+    users.push(newUser);
     await writeUsers(users);
-    return user;
+    return newUser;
   },
 
   async readAllUsers() {
