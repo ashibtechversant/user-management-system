@@ -5,13 +5,11 @@ const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-mid
 const multerMiddleware = require('../middleware/multer-middleware');
 const resizeImageMiddleware = require('../middleware/resize-image-middleware');
 const multerErrorMiddleware = require('../middleware/multer-error-middleware');
-const authorizationMiddleware = require('../middleware/authorization-middleware');
 const pathVerificationMiddleware = require('../middleware/path-verification-middleware');
 
 const router = express.Router();
 
 router.use(authenticatioMiddleware);
-router.use(authorizationMiddleware('agent'));
 
 router
   .route('/:userId')

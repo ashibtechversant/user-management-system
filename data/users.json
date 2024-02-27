@@ -5,8 +5,6 @@
     "lastName": "Admin",
     "role": "admin",
     "email": "admin@gmail.com",
-    "password": "$2b$12$mVWDUcrXXvyg7DHTh7AZteEI0hSisqgavnzdyCsh.a2T6OHi7UTcG",
-    "otp": 474462,
-    "otpExpiringAt": "2024-02-27T10:47:51.883Z"
+    "password": "$2b$12$mVWDUcrXXvyg7DHTh7AZteEI0hSisqgavnzdyCsh.a2T6OHi7UTcG"
   }
 ]
