@@ -6,14 +6,5 @@
     "role": "admin",
     "email": "admin@gmail.com",
     "password": "$2b$12$mVWDUcrXXvyg7DHTh7AZteEI0hSisqgavnzdyCsh.a2T6OHi7UTcG"
-  },
-  {
-    "id": 2,
-    "firstName": "New User",
-    "lastName": "One",
-    "role": "agent",
-    "email": "example@example.com",
-    "password": "$2b$12$TSgT/3F4YzHaHnutYcnoxORF3KuNreWSyxcSisU4BXyGvCBDwdRwS",
-    "profilePictureUrl": "uploads/images/users/profile-pictures/user-2-1708574369640.jpeg"
   }
 ]
