@@ -20,4 +20,14 @@ router
   .post(authController.forgotPassword)
   .all(methodNotAllowedMiddleware);
 
+router
+  .route('/otp')
+  .post(authController.verifyOtp)
+  .all(methodNotAllowedMiddleware);
+
+router
+  .route('/reset-password')
+  .post(authController.resetPassword)
+  .all(methodNotAllowedMiddleware);
+
 module.exports = router;

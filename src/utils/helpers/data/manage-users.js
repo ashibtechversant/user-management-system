@@ -46,4 +46,14 @@ module.exports = {
     users.splice(userIndex, 1);
     await writeUsers(users);
   },
+
+  async deleteFieldsFromUser(userId, ...fields) {
+    const users = await module.exports.readAllUsers();
+    const userIndex = users.findIndex((user) => user.id === userId);
+    if (userIndex === -1) throw createHttpError.NotFound('user not found');
+    const user = users[userIndex];
+    fields.forEach((fieldName) => delete user[fieldName]);
+    await writeUsers(users);
+    return user;
+  },
 };

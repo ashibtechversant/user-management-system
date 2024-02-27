@@ -1,5 +1,5 @@
 function sanitizeUser(user) {
-  const { password, otp, otpCreatedAt, ...sanitizedUser } = user;
+  const { password, otp, otpExpiringAt, ...sanitizedUser } = user;
   return sanitizedUser;
 }
 

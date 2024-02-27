@@ -18,7 +18,11 @@ module.exports = {
   verifyRefreshToken(token) {
     return jwt.verify(token, jwtSecretRefreshKey);
   },
-  generateOtpToken(otp) {
-    return jwt.sign({ otp }, jwtSecretOtpKey, { expiresIn: '' });
+  generateOtpToken(otp, email) {
+    console.log(jwtSecretOtpKey);
+    return jwt.sign({ otp, email }, jwtSecretOtpKey, { expiresIn: '15m' });
+  },
+  verifyOtpToken(token) {
+    return jwt.verify(token, jwtSecretOtpKey);
   },
 };

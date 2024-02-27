@@ -1,6 +1,7 @@
 tags:
   name: Auth Routes
   description: Routes specified authentication and jwt purposes.
+
 /auth/login:
   post:
     summary: Login to get jwt
@@ -36,9 +37,15 @@ tags:
                         accessToken:
                           type: string
                           description: jwt access token
+                        accessTokenValidity:
+                          type: string
+                          description: jwt access token validity
                         refreshToken:
                           type: string
                           description: jwt refresh token
+                        refreshTokenValidity:
+                          type: string
+                          description: jwt refresh token validity
                         role:
                           type: string
                           enum: [admin, agent, supervisor, qc, qa]
@@ -70,6 +77,7 @@ tags:
           *Possible Reasons:*
           - Can't connect to server: Check the connection
           - Other server errors
+
 /auth/refresh-token:
   post:
     summary: Get a new pair of access and refresh tokens
@@ -109,9 +117,15 @@ tags:
                         accessToken:
                           type: string
                           description: New access token
+                        accessTokenValidity:
+                          type: string
+                          description: jwt access token validity
                         refreshToken:
                           type: string
                           description: New refresh token
+                        refreshTokenValidity:
+                          type: string
+                          description: jwt refresh token validity
       '400':
         description: |
           **Bad Request**  
@@ -132,6 +146,199 @@ tags:
           **Method Not Allowed**  
           *Possible Reasons:*
           - Method is not allowed: Check HTTP method and try again.
+      '500':
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
+
+/auth/forgot-password:
+  post:
+    summary: Receive an otp to reset password in the registered email
+    tags: [Auth Routes]
+    requestBody:
+      description: Registered email of the user
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+                description: Registered email of the user
+            required:
+              - email
+    responses:
+      '200':
+        description: OTP successfully sent to the user email
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+      '400':
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*  
+          - No email provided: Insert email in the request body.
+      '404':
+        description: |
+          **Not Found**  
+          *Possible Reasons:*  
+          - User not found: Try with a different email.
+          - Path is incorrect: Check API path and try again.
+      '405':
+        description: |
+          **Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed: Check HTTP method and try again.
+      '500':
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
+      '504':
+        description: |
+          **Gateway Tiemout**  
+          *Possible Reasons:*  
+          - Email sending timed out: Check connectivity and try again.
+
+/auth/otp:
+  post:
+    summary: Verify otp for password reset
+    tags: [Auth Routes]
+    requestBody:
+      description: Details for verifying otp
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+                description: Registered email of the user
+              otp:
+                type: number
+                length: 6
+                description: OTP sent to the registered email
+            required:
+              - email
+              - otp
+    responses:
+      '200':
+        description: OTP successfully verified
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+                data:
+                  type: object
+                  properties:
+                    otp:
+                      type: object
+                      properties:
+                        otpToken:
+                          type: string
+                          description: Generated otp token for password reset
+                        otpTokenValidity:
+                          type: string
+                          description: otp token validity
+      '400':
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*  
+          - Otp has expired: Request new otp.
+          - Invalid otp: Request new otp.
+      '404':
+        description: |
+          **Not Found**
+          *Possible Reasons:*  
+          - Path is incorrect: Check API path and try again.
+      '405':
+        description: |
+          **Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed: Check HTTP method and try again.
+      '422':
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed: Try checking the request body.
+      '500':
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
+
+/auth/reset-password:
+  post:
+    summary: Reset the password of the user
+    tags: [Auth Routes]
+    requestBody:
+      description: Details for resetting password
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Reset Password'
+    responses:
+      '200':
+        description: Password successfully reset
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+      '401':
+        description: |
+          **Unauthorized**   
+          *Possible Reasons:*
+          - Invalid token: Try with a different otp token.
+      '404':
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found: Try with a different otp token.
+          - Path is incorrect: Check API path and try again.
+      '405':
+        description: |
+          **Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed: Check HTTP method and try again.
+      '422':
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed: Try checking the request body.
       '500':
         description: |
           **Internal Server Error**  
