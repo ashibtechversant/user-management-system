@@ -1,0 +1,63 @@
+tags:
+  name: Agent Routes
+  description: Routes specified for agent use.
+
+/agents:
+  post:
+    summary: Register as a new agent
+    tags: [Agent Routes]
+    requestBody:
+      description: Details of the new user
+      required: 'true'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Agent Registration'
+    responses:
+      '201':
+        description: Agent created
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+                data:
+                  type: object
+                  properties:
+                    users:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/User'
+      '404':
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - Path is incorrect: Check API path and try again.
+      '405':
+        description: |
+          **Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed: Check HTTP method and try again.
+      '409':
+        description: |
+          **Conflict**  
+          *Possible Reasons:*
+          - Email has already been registered: Try using a different email.
+      '422':
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed: Try checking the request body.
+      '500':
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors

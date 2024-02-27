@@ -16,9 +16,11 @@ router
 const authRouter = require('./auth-routes');
 const adminRouter = require('./admin-routes');
 const userRouter = require('./user-routes');
+const agentRouter = require('./agent-routes');
 
 router.use('/auth', authRouter);
 router.use('/admin', adminRouter);
 router.use('/users', userRouter);
+router.use('/agents', agentRouter);
 
 module.exports = router;
