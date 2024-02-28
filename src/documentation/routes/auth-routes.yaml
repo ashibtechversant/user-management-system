@@ -1,6 +1,6 @@
 tags:
   name: Auth Routes
-  description: Routes specified authentication and jwt purposes.
+  description: Routes specified for authentication and jwt purposes.
 
 /auth/login:
   post:

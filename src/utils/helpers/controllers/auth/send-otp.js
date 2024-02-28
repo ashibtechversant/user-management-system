@@ -8,10 +8,24 @@ module.exports = async (email, otp) => {
       from: 'User Management System Support <support@ums.com>',
       to: email,
       subject: 'OTP for password reset - User Management System',
-      text: `Hello ${email},\n
-We have received your request for password reset. Your OTP for password reset is: ${otp}. This OTP is valid only for the next 5 minutes only. Please do not share it with anyone. If you did not request this, please ignore this email.\n
-Thank you
-Team UMS`,
+      html: `
+      <style>
+      body {
+        font-family: sans-serif;
+      }
+      h3 {
+        color: blue;
+      }
+      </style>
+      <p>Hello <strong>${email}</strong>,</p>
+      <p>We have received your request for password reset.
+      Your OTP for password reset is: 
+      <h3>${otp}</h3>
+      This OTP is valid only for the next 5 minutes only. Please do not share it with anyone.
+      If you did not request this, please ignore this email.</p>
+      <p>Thank you</p>
+      <p><strong>Team UMS<strong></p>
+    `,
     }),
     new Promise((_, reject) => {
       setTimeout(
