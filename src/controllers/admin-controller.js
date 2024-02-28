@@ -6,7 +6,6 @@ const handleDuplicateEmail = require('../utils/helpers/controllers/users/handle-
 const convertUserIdInPath = require('../utils/helpers/controllers/convert-user-id-in-path');
 const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
 const {
-  readAllUsers,
   createUser,
   deleteUserWithId,
   readUserWithId,
@@ -31,28 +30,6 @@ module.exports = {
         );
     } catch (error) {
       handleJoiError(error, next);
-    }
-  },
-
-  async getAllUsers(_, res, next) {
-    try {
-      const users = await readAllUsers();
-      res.json(responseFormatter('users retrieved successfully', { users }));
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async getUser(req, res, next) {
-    try {
-      const { userId } = req.params;
-      const convertedUserId = convertUserIdInPath(userId);
-      const user = await readUserWithId(convertedUserId);
-      res.json(
-        responseFormatter('user details retrieved successfully', { user })
-      );
-    } catch (error) {
-      next(error);
     }
   },
 

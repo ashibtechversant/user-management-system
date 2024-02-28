@@ -9,15 +9,15 @@ const responseFormatter = require('../utils/helpers/controllers/response-formatt
 const {
   readUserWithId,
   updateUserWithId,
+  readAllUsers,
 } = require('../utils/helpers/data/manage-users');
 
 module.exports = {
   async getUser(req, res, next) {
     try {
-      const { userId: payloadUserId } = req.payload;
       const { userId: paramsUserId } = req.params;
-      convertUserIdInPath(paramsUserId);
-      const user = await readUserWithId(payloadUserId);
+      const convertedUserId = convertUserIdInPath(paramsUserId);
+      const user = await readUserWithId(convertedUserId);
       res.json(
         responseFormatter('user details retrieved successfully', { user })
       );
@@ -82,6 +82,15 @@ module.exports = {
     try {
       const { file } = req;
       res.json(responseFormatter('file uploaded successfully', { file }));
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async getAllUsers(_, res, next) {
+    try {
+      const users = await readAllUsers();
+      res.json(responseFormatter('users retrieved successfully', { users }));
     } catch (error) {
       next(error);
     }
