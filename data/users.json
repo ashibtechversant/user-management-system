@@ -6,5 +6,13 @@
     "role": "admin",
     "email": "admin@gmail.com",
     "password": "$2b$12$mVWDUcrXXvyg7DHTh7AZteEI0hSisqgavnzdyCsh.a2T6OHi7UTcG"
+  },
+  {
+    "id": 1709118889531,
+    "firstName": "System",
+    "lastName": "Supervisor",
+    "role": "supervisor",
+    "email": "supervisor@gmail.com",
+    "password": "$2b$12$OCx9RsHnLyaGGPljwj45xOY1tsRwIVvFLq1MvpIsA7GN.qoxVLHt2"
   }
 ]
