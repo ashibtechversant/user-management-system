@@ -1,3 +1,4 @@
+const createHttpError = require('http-errors');
 const registrationSchema = require('../schemas/registration-schema');
 const adminUserUpdateSchema = require('../schemas/admin-user-update-schema');
 const responseFormatter = require('../utils/helpers/controllers/response-formatter');
@@ -37,6 +38,9 @@ module.exports = {
     try {
       const { userId } = req.params;
       const convertedUserId = convertUserIdInPath(userId);
+      const user = await readUserWithId(convertedUserId);
+      if (user.role === 'admin')
+        throw createHttpError.Forbidden('cannot delete admin');
       await deleteUserWithId(convertedUserId);
       res.json(responseFormatter('user deleted successfully'));
     } catch (error) {

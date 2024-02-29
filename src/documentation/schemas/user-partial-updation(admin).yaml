@@ -17,7 +17,7 @@ components:
           description: Email of the user
         role:
           type: string
-          enum: [admin, agent, supervisor, qc, qa]
+          enum: [agent, supervisor, qc, qa]
           description: Type of role of the user
         password:
           type: string

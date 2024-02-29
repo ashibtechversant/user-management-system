@@ -8,9 +8,7 @@ module.exports = Joi.object({
     .pattern(/^[a-zA-Z ]+$/)
     .required(),
   email: Joi.string().email().lowercase().required(),
-  role: Joi.string()
-    .valid('admin', 'agent', 'supervisor', 'qc', 'qa')
-    .required(),
+  role: Joi.string().valid('agent', 'supervisor', 'qc', 'qa').required(),
   password: Joi.string()
     .min(8)
     .pattern(/^[a-zA-Z0-9]{8,30}$/)

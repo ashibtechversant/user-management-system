@@ -377,7 +377,7 @@ tags:
           - Can't connect to server: Check the connection
           - Other server errors
   delete:
-    summary: Get user details by user ID
+    summary: Delete user with user ID
     tags: [Admin Routes]
     security:
       - bearerAuth: []
@@ -419,6 +419,7 @@ tags:
           **Forbidden**  
           *Possible Reasons:*
           - Admin authorization failed: Use a token with admin privilege.
+          - Cannot delete admin: Do not delete admin.
       '404':
         description: |
           **Not Found**  
