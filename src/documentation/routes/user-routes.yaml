@@ -466,7 +466,7 @@
         description: |
           **Expectation Failed**  
           *Possible Reasons:*
-          - Expected field not found: Check the request body for correct fieldname.
+          - Expected field not found or multiple files uploaded: Check the request body for correct fieldname with single image value.
       '500':
         description: |
           **Internal Server Error**  
