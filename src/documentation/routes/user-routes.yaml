@@ -1,3 +1,7 @@
+tags:
+  name: User Routes
+  description: Routes specified for all users irrespective of their role.
+
 /users/{userId}:
   get:
     summary: Get user details by user ID after authorization

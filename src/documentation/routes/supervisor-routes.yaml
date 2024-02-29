@@ -1,0 +1,141 @@
+tags:
+  name: Supervisor Routes
+  description: Routes specified for supervisor use after logging in as supervisor.
+
+/supervisors/{supervisorUserId}/users:
+  get:
+    summary: Lists all registered users
+    tags: [Supervisor Routes]
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: Retrieved all registered users
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+                data:
+                  type: object
+                  properties:
+                    users:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/User'
+      '400':
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token: Please authorize with a jwt token.
+      '401':
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token: Try with a different jwt token.
+      '403':
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Supervisor authorization failed: Use a token with supervisor privilege.
+      '404':
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found: Try with a different jwt token.
+          - Path is incorrect: Check API path and try again.
+      '405':
+        description: |
+          **Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed: Check HTTP method and try again.
+      '500':
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors
+
+/supervisors/{supervisorUserId}/users/{userId}:
+  get:
+    summary: Get user details by user ID
+    tags: [Supervisor Routes]
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: userId
+        required: 'true'
+        description: ID of the user
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: User details retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ['true', 'false']
+                  description: Whether the request was successful or not
+                message:
+                  type: string
+                  description: Description of the response
+                data:
+                  type: object
+                  properties:
+                    user:
+                      $ref: '#/components/schemas/User'
+      '400':
+        description: |
+          **Bad Request**  
+          *Possible Reasons:*
+          - Missing token: Please authorize with a jwt token.
+          - Invalid userId in path: Try using a different userId and check if it is of number type.
+      '401':
+        description: |
+          **Unauthorized**  
+          *Possible Reasons:*
+          - Invalid token: Try with a different jwt token.
+      '403':
+        description: |
+          **Forbidden**  
+          *Possible Reasons:*
+          - Supervisor authorization failed: Use a token with supervisor privilege.
+      '404':
+        description: |
+          **Not Found**  
+          *Possible Reasons:*
+          - User not found: Try with a different jwt token.
+          - Path is incorrect: Check API path and try again.
+      '405':
+        description: |
+          **Method Not Allowed**  
+          *Possible Reasons:*
+          - Method is not allowed: Check HTTP method and try again.
+      '409':
+        description: |
+          **Conflict**  
+          *Possible Reasons:*
+          - Email has already been registered: Try using a different email.
+      '422':
+        description: |
+          **Unprocessable Entity**  
+          *Possible Reasons:*
+          - Validation failed: Try checking the request body.
+      '500':
+        description: |
+          **Internal Server Error**  
+          *Possible Reasons:*
+          - Can't connect to server: Check the connection
+          - Other server errors

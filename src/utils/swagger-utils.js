@@ -52,9 +52,9 @@ const swaggerDescription = `
       --> \`patch /users/{userId}\`
   - Login as supervisor:
     - Get all registered users
-      \`get /supervisor/users\` 
+      \`get /supervisors/{supervisorUserId}/users\` 
     - Get a particular user details
-      \`get /supervisor/users/{userId}\`
+      \`get /supervisors/{supervisorUserId}/users/{userId}\`
     - Get supervisor details:
       \`get /users/{userId}\` 
     - Update supervisor details:
