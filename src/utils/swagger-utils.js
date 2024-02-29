@@ -50,6 +50,20 @@ const swaggerDescription = `
     - Upload admin profile picture:
       \`post /users/{userId}/profile-picture\`
       --> \`patch /users/{userId}\`
+  - Login as supervisor:
+    - Get all registered users
+      \`get /supervisor/users\` 
+    - Get a particular user details
+      \`get /supervisor/users/{userId}\`
+    - Get supervisor details:
+      \`get /users/{userId}\` 
+    - Update supervisor details:
+      \`patch /users/{userId}\`
+    - Change supervisor password:
+      \`patch /users/{userId}/password\`
+    - Upload supervisor profile picture:
+      \`post /users/{userId}/profile-picture\`
+      --> \`patch /users/{userId}\`
   - Login as agent:
     - Get agent details:
       \`get /users/{userId}\` 
@@ -59,7 +73,7 @@ const swaggerDescription = `
       \`patch /users/{userId}/password\`
     - Upload agent profile picture:
       \`post /users/{userId}/profile-picture\`
-      --> \`patch /agents/{userId}\`
+      --> \`patch /users/{userId}\`
 `;
 
 // Swagger configuration options
