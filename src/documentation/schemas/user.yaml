@@ -6,6 +6,10 @@ components:
         id:
           type: number
           description: Auto-generate id for the user
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time the user was created
         firstName:
           type: string
           pattern: '^[a-zA-Z ]+$'

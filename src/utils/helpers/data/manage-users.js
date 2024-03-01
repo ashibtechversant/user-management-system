@@ -9,17 +9,22 @@ async function writeUsers(users) {
 
 module.exports = {
   async createUser(user) {
-    const id = new Date().getTime();
-    const users = await module.exports.readAllUsers();
-    const newUser = { id, ...user };
+    const createdAt = new Date();
+    const id = createdAt.getTime();
+    const users = await module.exports.readAllUsers(true);
+    const newUser = { id, createdAt, ...user };
     users.push(newUser);
     await writeUsers(users);
     return newUser;
   },
 
-  async readAllUsers() {
+  async readAllUsers(includeDeleted = false) {
     const usersData = await fs.readFile(usersFilePath, 'utf8');
     const users = JSON.parse(usersData);
+    if (!includeDeleted) {
+      const usersExcludingDeleted = users.filter((user) => !user.deletedAt);
+      return usersExcludingDeleted;
+    }
     return users;
   },
 
@@ -42,11 +47,8 @@ module.exports = {
   },
 
   async deleteUserWithId(userId) {
-    const users = await module.exports.readAllUsers();
-    const userIndex = users.findIndex((user) => user.id === userId);
-    if (userIndex === -1) throw createHttpError.NotFound('user not found');
-    users.splice(userIndex, 1);
-    await writeUsers(users);
+    const deletedAt = new Date();
+    await module.exports.updateUserWithId(userId, { deletedAt });
   },
 
   async deleteFieldsFromUser(userId, ...fields) {

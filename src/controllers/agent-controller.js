@@ -11,12 +11,13 @@ module.exports = {
       const registrationData = await agentRegistrationSchema.validateAsync(
         req.body
       );
-      registrationData.role = 'agent';
       await handleDuplicateEmail(registrationData.email);
-      const hashedPassword = await hashPassword(registrationData.password);
+      const role = 'agent';
+      const password = await hashPassword(registrationData.password);
       const newUser = {
         ...registrationData,
-        password: hashedPassword,
+        role,
+        password,
       };
       const createdUser = await createUser(newUser);
       res

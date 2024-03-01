@@ -18,10 +18,10 @@ module.exports = {
     try {
       const registrationData = await registrationSchema.validateAsync(req.body);
       await handleDuplicateEmail(registrationData.email);
-      const hashedPassword = await hashPassword(registrationData.password);
+      const password = await hashPassword(registrationData.password);
       const newUser = {
         ...registrationData,
-        password: hashedPassword,
+        password,
       };
       const createdUser = await createUser(newUser);
       res
