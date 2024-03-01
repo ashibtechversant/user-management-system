@@ -5,9 +5,13 @@ const { nodeEnv } = require('../../config');
 const stream = {
   write: (message) => logger.http(message.replace(/\n$/, '')),
 };
-const skip = () => {
+const skip = (req) => {
   const env = nodeEnv || 'development';
-  return env !== 'development';
+  return (
+    env !== 'development' ||
+    req.url.startsWith('/swagger-ui') ||
+    req.url.startsWith('/favicon')
+  );
 };
 
 module.exports = morgan(

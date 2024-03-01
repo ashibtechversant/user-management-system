@@ -14,5 +14,13 @@
     "role": "supervisor",
     "email": "supervisor@gmail.com",
     "password": "$2b$12$OCx9RsHnLyaGGPljwj45xOY1tsRwIVvFLq1MvpIsA7GN.qoxVLHt2"
+  },
+  {
+    "id": 1709266982175,
+    "firstName": "New Agent",
+    "lastName": "Sdfa",
+    "email": "ashij@gmal.cc",
+    "password": "$2b$12$noO.KUak30BiVHk9CG1K3eO4Xkyj8LfyPM12Z6PCO.rsOxtEtRtcq",
+    "role": "agent"
   }
 ]
