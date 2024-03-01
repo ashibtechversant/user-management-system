@@ -3,7 +3,9 @@ const logger = require('../utils/winston-utils');
 
 module.exports = async (err, _, res, next) => {
   res.status(err.status || 500);
-  logger.error(`${err.name} message: ${err.message}`);
+  logger.error(
+    `${err.name} status: ${err.status || 500} message: ${err.message}`
+  );
   res.json(
     responseFormatter(
       'an error has occured',
