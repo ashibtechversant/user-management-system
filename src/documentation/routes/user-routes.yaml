@@ -2,19 +2,12 @@ tags:
   name: User Routes
   description: Routes specified for all users irrespective of their role.
 
-/users/{userId}:
+/users/me:
   get:
     summary: Get user details by user ID after authorization
     tags: [User Routes]
     security:
       - bearerAuth: []
-    parameters:
-      - name: userId
-        in: path
-        required: 'true'
-        description: ID of the user
-        schema:
-          type: integer
     responses:
       '200':
         description: User details retrieved successfully
@@ -73,13 +66,6 @@ tags:
     tags: [User Routes]
     security:
       - bearerAuth: []
-    parameters:
-      - name: userId
-        in: path
-        required: 'true'
-        description: ID of the user
-        schema:
-          type: integer
     requestBody:
       description: Modified user details. Required fields cannot be omitted.
       required: 'true'
@@ -155,13 +141,7 @@ tags:
     tags: [User Routes]
     security:
       - bearerAuth: []
-    parameters:
-      - name: userId
-        in: path
-        required: 'true'
-        description: ID of the user
-        schema:
-          type: integer
+
     requestBody:
       description: Modified user details. Required fields cannot be omitted.
       required: 'true'
@@ -233,19 +213,13 @@ tags:
           - Can't connect to server: Check the connection
           - Other server errors
 
-/users/{userId}/password:
+/users/me/password:
   put:
     summary: Change user password
     tags: [User Routes]
     security:
       - bearerAuth: []
-    parameters:
-      - name: userId
-        in: path
-        required: 'true'
-        description: ID of the user
-        schema:
-          type: integer
+
     requestBody:
       description: Old and new password
       required: 'true'
@@ -317,13 +291,7 @@ tags:
     tags: [User Routes]
     security:
       - bearerAuth: []
-    parameters:
-      - name: userId
-        in: path
-        required: 'true'
-        description: ID of the user
-        schema:
-          type: integer
+
     requestBody:
       description: Old and new password
       required: 'true'
@@ -391,19 +359,13 @@ tags:
           - Can't connect to server: Check the connection
           - Other server errors
 
-/users/{userId}/profile-picture:
+/users/me/profile-picture:
   post:
     summary: Upload profile picture to the server and retrieve image-url
     tags: [User Routes]
     security:
       - bearerAuth: []
-    parameters:
-      - name: userId
-        in: path
-        required: 'true'
-        description: ID of the user
-        schema:
-          type: integer
+
     requestBody:
       content:
         multipart/form-data:

@@ -15,8 +15,8 @@ const {
 module.exports = {
   async getUser(req, res, next) {
     try {
-      const { userId: paramsUserId } = req.params;
-      const convertedUserId = convertUserIdInPath(paramsUserId);
+      const { userId } = req.params;
+      const convertedUserId = convertUserIdInPath(userId);
       const user = await readUserWithId(convertedUserId);
       res.json(
         responseFormatter('user details retrieved successfully', { user })
@@ -29,13 +29,11 @@ module.exports = {
   async updateUser(req, res, next) {
     try {
       const { method } = req;
-      const { userId: paramsUserId } = req.params;
-      const { userId: payloadUserId } = req.payload;
-      convertUserIdInPath(paramsUserId);
+      const { userId } = req.payload;
       const schema = method === 'PUT' ? updateSchema : updatePartialSchema;
       const updationData = await schema.validateAsync(req.body);
-      const user = await readUserWithId(payloadUserId);
-      const updatedUser = await updateUserWithId(payloadUserId, updationData);
+      const user = await readUserWithId(userId);
+      const updatedUser = await updateUserWithId(userId, updationData);
       if (JSON.stringify(user) === JSON.stringify(updatedUser))
         return res.json(
           responseFormatter('no changes were found for updation', { user })
@@ -50,11 +48,9 @@ module.exports = {
 
   async changePassword(req, res, next) {
     try {
-      const { userId: paramsUserId } = req.params;
-      const { userId: payloadUserId } = req.payload;
-      convertUserIdInPath(paramsUserId);
+      const { userId } = req.payload;
       const passwordData = await passwordSchema.validateAsync(req.body);
-      const user = await readUserWithId(payloadUserId);
+      const user = await readUserWithId(userId);
       const isPasswordValid = await checkPassword(
         passwordData.currentPassword,
         user.password
@@ -67,7 +63,7 @@ module.exports = {
           responseFormatter('no changes were made to the password', { user })
         );
       const updationData = { password: hashedPassword };
-      const updatedUser = await updateUserWithId(payloadUserId, updationData);
+      const updatedUser = await updateUserWithId(userId, updationData);
       return res.json(
         responseFormatter('password updated successfully', {
           user: updatedUser,
@@ -91,6 +87,18 @@ module.exports = {
     try {
       const users = await readAllUsers();
       res.json(responseFormatter('users retrieved successfully', { users }));
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async getUserProfile(req, res, next) {
+    try {
+      const { userId } = req.payload;
+      const user = await readUserWithId(userId);
+      res.json(
+        responseFormatter('user details retrieved successfully', { user })
+      );
     } catch (error) {
       next(error);
     }

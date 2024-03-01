@@ -42,38 +42,38 @@ const swaggerDescription = `
     - Delete any user
       \`delete /admin/users/{userId}\`
     - Get admin details:
-      \`get /users/{userId}\` 
+      \`get /users/me\` 
     - Update admin details:
-      \`patch /users/{userId}\`
+      \`patch /users/me\`
     - Change admin password:
-      \`patch /users/{userId}/password\`
+      \`patch /users/me/password\`
     - Upload admin profile picture:
-      \`post /users/{userId}/profile-picture\`
-      --> \`patch /users/{userId}\`
+      \`post /users/me/profile-picture\`
+      --> \`patch /users/me\`
   - Login as supervisor:
     - Get all registered users
-      \`get /supervisors/{supervisorUserId}/users\` 
+      \`get /supervisor/users\` 
     - Get a particular user details
-      \`get /supervisors/{supervisorUserId}/users/{userId}\`
+      \`get /supervisor/users/{userId}\`
     - Get supervisor details:
-      \`get /users/{userId}\` 
+      \`get /users/me\` 
     - Update supervisor details:
-      \`patch /users/{userId}\`
+      \`patch /users/me\`
     - Change supervisor password:
-      \`patch /users/{userId}/password\`
+      \`patch /users/me/password\`
     - Upload supervisor profile picture:
-      \`post /users/{userId}/profile-picture\`
-      --> \`patch /users/{userId}\`
+      \`post /users/me/profile-picture\`
+      --> \`patch /users/me\`
   - Login as agent:
     - Get agent details:
-      \`get /users/{userId}\` 
+      \`get /users/me\` 
     - Update agent details:
-      \`patch /users/{userId}\`
+      \`patch /users/me\`
     - Change agent password:
-      \`patch /users/{userId}/password\`
+      \`patch /users/me/password\`
     - Upload agent profile picture:
-      \`post /users/{userId}/profile-picture\`
-      --> \`patch /users/{userId}\`
+      \`post /users/me/profile-picture\`
+      --> \`patch /users/me\`
 `;
 
 // Swagger configuration options

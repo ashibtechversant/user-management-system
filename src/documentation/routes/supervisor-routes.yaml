@@ -2,7 +2,7 @@ tags:
   name: Supervisor Routes
   description: Routes specified for supervisor use after logging in as supervisor.
 
-/supervisors/{supervisorUserId}/users:
+/supervisor/users:
   get:
     summary: Lists all registered users
     tags: [Supervisor Routes]
@@ -63,7 +63,7 @@ tags:
           - Can't connect to server: Check the connection
           - Other server errors
 
-/supervisors/{supervisorUserId}/users/{userId}:
+/supervisor/users/{userId}:
   get:
     summary: Get user details by user ID
     tags: [Supervisor Routes]

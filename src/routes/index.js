@@ -23,6 +23,6 @@ router.use('/auth', authRouter);
 router.use('/admin', adminRouter);
 router.use('/users', userRouter);
 router.use('/agents', agentRouter);
-router.use('/supervisors', supervisorRouter);
+router.use('/supervisor', supervisorRouter);
 
 module.exports = router;

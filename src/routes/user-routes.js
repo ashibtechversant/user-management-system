@@ -5,27 +5,26 @@ const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-mid
 const multerMiddleware = require('../middleware/multer-middleware');
 const resizeImageMiddleware = require('../middleware/resize-image-middleware');
 const multerErrorMiddleware = require('../middleware/multer-error-middleware');
-const pathVerificationMiddleware = require('../middleware/path-verification-middleware');
 
 const router = express.Router();
 
 router.use(authenticatioMiddleware);
 
 router
-  .route('/:userId')
-  .get(userController.getUser)
+  .route('/me')
+  .get(userController.getUserProfile)
   .put(userController.updateUser)
   .patch(userController.updateUser)
   .all(methodNotAllowedMiddleware);
 
 router
-  .route('/:userId/password')
+  .route('/me/password')
   .put(userController.changePassword)
   .patch(userController.changePassword)
   .all(methodNotAllowedMiddleware);
 
 router
-  .route('/:userId/profile-picture')
+  .route('/me/profile-picture')
   .post(
     multerMiddleware.single('file'),
     resizeImageMiddleware,
@@ -33,7 +32,5 @@ router
     multerErrorMiddleware
   )
   .all(methodNotAllowedMiddleware);
-
-router.param('userId', pathVerificationMiddleware);
 
 module.exports = router;
