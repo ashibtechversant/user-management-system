@@ -17,6 +17,8 @@ app.use(cors());
 app.use(morganMiddleware); // Logger for development
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static('./uploads'));
+
 app.use('/api', apiRouter); // Mount all api routes
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(notFoundMiddleware);
