@@ -5,11 +5,11 @@ components:
       properties:
         firstName:
           type: string
-          pattern: '^[a-zA-Z ]+$'
+          pattern: '^[a-zA-Z]+$'
           description: First Name of the user
         lastName:
           type: string
-          pattern: '^[a-zA-Z ]+$'
+          pattern: '^[a-zA-Z]+$'
           description: Last Name of the user
         email:
           type: string

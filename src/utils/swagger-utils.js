@@ -74,6 +74,19 @@ const swaggerDescription = `
     - Upload agent profile picture:
       \`post /users/me/profile-picture\`
       --> \`patch /users/me\`
+  
+### Access Uploaded Images    
+  \`http://localhost:3000/{imagePath}\`
+
+### Search Users (Admin/Supervisor)
+  You can search for users with their email, first name or last name by providing the \`search\` query parameter.  
+  Eg: \`get /admin/users?search=john\`
+
+### Pagination (Admin/Supervisor)
+  You can paginate the results by providing the \`page\` and \`limit\` query parameters.  
+  Eg: \`get /admin/users?page=1&limit=10\`  
+  - \`limit\` controls the number of results to be returned per page
+  - \`page\` controls which page of results is to be shown
 `;
 
 // Swagger configuration options

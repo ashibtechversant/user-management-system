@@ -11,6 +11,8 @@ const {
   updateUserWithId,
   readAllUsers,
 } = require('../utils/helpers/data/manage-users');
+const applyPagination = require('../utils/helpers/controllers/users/apply-pagination');
+const applySearch = require('../utils/helpers/controllers/users/apply-search');
 
 module.exports = {
   async getUser(req, res, next) {
@@ -83,10 +85,15 @@ module.exports = {
     }
   },
 
-  async getAllUsers(_, res, next) {
+  async getAllUsers(req, res, next) {
     try {
       const users = await readAllUsers();
-      res.json(responseFormatter('users retrieved successfully', { users }));
+      const { page, limit, search } = req.query;
+      const searchResult = await applySearch(users, search);
+      const paginatedResult = await applyPagination(searchResult, page, limit);
+      res.json(
+        responseFormatter('users retrieved successfully', paginatedResult)
+      );
     } catch (error) {
       next(error);
     }
