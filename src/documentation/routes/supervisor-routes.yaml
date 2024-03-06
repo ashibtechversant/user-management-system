@@ -50,9 +50,9 @@ tags:
                     limit:
                       type: integer
                       description: Number of items per page
-                    totalPages:
+                    totalCount:
                       type: integer
-                      description: Total number of pages
+                      description: Total number of items
                     users:
                       type: array
                       items:
