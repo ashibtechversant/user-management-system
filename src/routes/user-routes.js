@@ -1,6 +1,6 @@
 const express = require('express');
 const userController = require('../controllers/user-controller');
-const authenticatioMiddleware = require('../middleware/authentication-middleware');
+const authenticationMiddleware = require('../middleware/authentication-middleware');
 const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-middleware');
 const multerMiddleware = require('../middleware/multer-middleware');
 const resizeImageMiddleware = require('../middleware/resize-image-middleware');
@@ -8,7 +8,7 @@ const multerErrorMiddleware = require('../middleware/multer-error-middleware');
 
 const router = express.Router();
 
-router.use(authenticatioMiddleware);
+router.use(authenticationMiddleware);
 
 router
   .route('/me')

@@ -1,12 +1,12 @@
 const express = require('express');
-const authMiddleware = require('../middleware/authentication-middleware');
+const authenticationMiddleware = require('../middleware/authentication-middleware');
 const authorizationMiddleware = require('../middleware/authorization-middleware');
 const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-middleware');
 const userController = require('../controllers/user-controller');
 
 const router = express.Router();
 
-router.use(authMiddleware);
+router.use(authenticationMiddleware);
 router.use(authorizationMiddleware('supervisor'));
 
 router

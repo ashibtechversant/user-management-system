@@ -143,7 +143,7 @@ tags:
       - bearerAuth: []
 
     requestBody:
-      description: Modified user details. Required fields cannot be omitted.
+      description: Modified user details. Can omit fields which need not be updated.
       required: 'true'
       content:
         application/json:
