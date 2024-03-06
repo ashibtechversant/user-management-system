@@ -4,7 +4,10 @@ module.exports = async (users, searchQuery) => {
     (user) =>
       user.email.includes(search) ||
       user.firstName.toLowerCase().includes(search) ||
-      user.lastName.toLowerCase().includes(search)
+      user.lastName.toLowerCase().includes(search) ||
+      `${user.firstName.toLowerCase()} ${user.lastName.toLowerCase()}`.includes(
+        search
+      )
   );
   return searchResult;
 };
