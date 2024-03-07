@@ -1,18 +1,18 @@
 const createHttpError = require('http-errors');
-const convertUserIdInPath = require('../utils/helpers/controllers/convert-user-id-in-path');
-const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
+const convertUserIdInPath = require('../utils/controllers/convert-user-id-in-path');
+const handleJoiError = require('../utils/controllers/handle-joi-error');
 const updateSchema = require('../schemas/update-schema');
 const updatePartialSchema = require('../schemas/update-partial-schema');
 const passwordSchema = require('../schemas/password-schema');
 const { hashPassword, checkPassword } = require('../utils/bcrypt-utils');
-const responseFormatter = require('../utils/helpers/controllers/response-formatter');
+const responseFormatter = require('../utils/controllers/response-formatter');
 const {
   readUserWithId,
   updateUserWithId,
   readAllUsers,
-} = require('../utils/helpers/data/manage-users');
-const applyPagination = require('../utils/helpers/controllers/users/apply-pagination');
-const applySearch = require('../utils/helpers/controllers/users/apply-search');
+} = require('../utils/data/manage-users');
+const applyPagination = require('../utils/controllers/users/apply-pagination');
+const applySearch = require('../utils/controllers/users/apply-search');
 
 module.exports = {
   async getUser(req, res, next) {

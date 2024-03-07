@@ -1,5 +1,5 @@
 const createHttpError = require('http-errors');
-const { readUserWithId } = require('../utils/helpers/data/manage-users');
+const { readUserWithId } = require('../utils/data/manage-users');
 
 module.exports = (role) => async (req, _, next) => {
   try {

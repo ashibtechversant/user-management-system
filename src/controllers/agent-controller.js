@@ -1,9 +1,9 @@
 const agentRegistrationSchema = require('../schemas/agent-registration-schema');
 const { hashPassword } = require('../utils/bcrypt-utils');
-const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
-const responseFormatter = require('../utils/helpers/controllers/response-formatter');
-const handleDuplicateEmail = require('../utils/helpers/controllers/users/handle-duplicate-email');
-const { createUser } = require('../utils/helpers/data/manage-users');
+const handleJoiError = require('../utils/controllers/handle-joi-error');
+const responseFormatter = require('../utils/controllers/response-formatter');
+const handleDuplicateEmail = require('../utils/controllers/users/handle-duplicate-email');
+const { createUser } = require('../utils/data/manage-users');
 
 module.exports = {
   async registerAgent(req, res, next) {

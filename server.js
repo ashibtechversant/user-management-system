@@ -1,14 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
-const apiRouter = require('./routes');
+const apiRouter = require('./src/routes');
 
-const { port, nodeEnv } = require('../config');
-const logger = require('./utils/winston-utils');
-const swaggerSpec = require('./utils/swagger-utils');
-const notFoundMiddleware = require('./middleware/not-found-middleware');
-const errorHandlerMiddleware = require('./middleware/error-handler-middleware');
-const morganMiddleware = require('./middleware/morgan-middleware');
+const { port, nodeEnv } = require('./config');
+const logger = require('./src/utils/winston-utils');
+const swaggerSpec = require('./swagger/config');
+const notFoundMiddleware = require('./src/middleware/not-found-middleware');
+const errorHandlerMiddleware = require('./src/middleware/error-handler-middleware');
+const morganMiddleware = require('./src/middleware/morgan-middleware');
 // Setup
 const app = express();
 

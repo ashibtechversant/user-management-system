@@ -1,6 +1,4 @@
-const swaggerJsdoc = require('swagger-jsdoc');
-
-const swaggerDescription = `
+module.exports = `
 ## API documentation for Sample project - UMS  
 
 ### Overview  
@@ -88,35 +86,3 @@ const swaggerDescription = `
   - \`limit\` controls the number of results to be returned per page
   - \`page\` controls which page of results is to be shown
 `;
-
-// Swagger configuration options
-const options = {
-  swaggerDefinition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'UMS API Documentation',
-      version: '1.0.0',
-      description: swaggerDescription,
-    },
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-          description: 'Provide your JWT token received after logging in.',
-        },
-      },
-    },
-    servers: [
-      {
-        url: 'http://localhost:3000/api',
-        description: 'UMS API Development server',
-      },
-    ],
-  },
-  apis: ['src/documentation/**/*.yaml'], // Path to your API routes
-};
-
-// Generate Swagger specification
-module.exports = swaggerJsdoc(options);

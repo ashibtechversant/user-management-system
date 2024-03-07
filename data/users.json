@@ -16,14 +16,5 @@
     "role": "supervisor",
     "email": "supervisor@gmail.com",
     "password": "$2b$12$OCx9RsHnLyaGGPljwj45xOY1tsRwIVvFLq1MvpIsA7GN.qoxVLHt2"
-  },
-  {
-    "id": 1709715795608,
-    "createdAt": "2024-03-06T09:03:15.608Z",
-    "firstName": "User",
-    "lastName": "Suman Kukk",
-    "role": "agent",
-    "email": "agent@gmail.com",
-    "password": "$2b$12$73aJcYvJ7uGNJplIbmXoZeictcY5xRXNRTLCfukNbZucmrMFjfcKC"
   }
 ]

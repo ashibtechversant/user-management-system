@@ -8,16 +8,16 @@ const {
   generateOtpToken,
   verifyOtpToken,
 } = require('../utils/jwt-utils');
-const responseFormatter = require('../utils/helpers/controllers/response-formatter');
-const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
-const generateOtp = require('../utils/helpers/controllers/auth/generate-otp');
-const sendOtp = require('../utils/helpers/controllers/auth/send-otp');
+const responseFormatter = require('../utils/controllers/response-formatter');
+const handleJoiError = require('../utils/controllers/handle-joi-error');
+const generateOtp = require('../utils/controllers/auth/generate-otp');
+const sendOtp = require('../utils/controllers/auth/send-otp');
 const verifyOtpSchema = require('../schemas/verify-otp-schema');
 const {
   updateUserWithId,
   deleteFieldsFromUser,
-} = require('../utils/helpers/data/manage-users');
-const getUserByEmail = require('../utils/helpers/controllers/auth/get-user-by-email');
+} = require('../utils/data/manage-users');
+const getUserByEmail = require('../utils/controllers/auth/get-user-by-email');
 const resetPasswordSchema = require('../schemas/reset-password-schema');
 
 module.exports = {

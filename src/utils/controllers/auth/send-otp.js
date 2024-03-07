@@ -1,6 +1,6 @@
 const createHttpError = require('http-errors');
-const transporter = require('../../../nodemailer-utils');
-const { emailTimeoutSeconds } = require('../../../../../config');
+const transporter = require('../../nodemailer-utils');
+const { emailTimeoutSeconds } = require('../../../../config');
 
 module.exports = async (email, otp) => {
   await Promise.race([

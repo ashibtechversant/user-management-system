@@ -1,7 +1,7 @@
 const express = require('express');
 const methodNotAllowedMiddleware = require('../middleware/method-not-allowed-middleware');
 const logger = require('../utils/winston-utils');
-const responseFormatter = require('../utils/helpers/controllers/response-formatter');
+const responseFormatter = require('../utils/controllers/response-formatter');
 
 const router = express.Router();
 

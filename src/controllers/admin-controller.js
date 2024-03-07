@@ -1,17 +1,17 @@
 const createHttpError = require('http-errors');
 const registrationSchema = require('../schemas/registration-schema');
 const adminUserUpdateSchema = require('../schemas/admin-user-update-schema');
-const responseFormatter = require('../utils/helpers/controllers/response-formatter');
+const responseFormatter = require('../utils/controllers/response-formatter');
 const { hashPassword } = require('../utils/bcrypt-utils');
-const handleDuplicateEmail = require('../utils/helpers/controllers/users/handle-duplicate-email');
-const convertUserIdInPath = require('../utils/helpers/controllers/convert-user-id-in-path');
-const handleJoiError = require('../utils/helpers/controllers/handle-joi-error');
+const handleDuplicateEmail = require('../utils/controllers/users/handle-duplicate-email');
+const convertUserIdInPath = require('../utils/controllers/convert-user-id-in-path');
+const handleJoiError = require('../utils/controllers/handle-joi-error');
 const {
   createUser,
   deleteUserWithId,
   readUserWithId,
   updateUserWithId,
-} = require('../utils/helpers/data/manage-users');
+} = require('../utils/data/manage-users');
 
 module.exports = {
   async registerUsers(req, res, next) {
