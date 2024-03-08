@@ -17,4 +17,5 @@ module.exports = {
   smtpUsername: process.env.SMTP_USERNAME,
   smtpPassword: process.env.SMTP_PASSWORD,
   emailTimeoutSeconds: process.env.EMAIL_TIMEOUT_SECONDS,
+  monogdbUri: process.env.MONGODB_URI,
 };

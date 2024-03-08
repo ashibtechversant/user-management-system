@@ -2,10 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const apiRouter = require('./src/routes');
+const connectToDb = require('./database');
 
 const { port, nodeEnv } = require('./config');
-const logger = require('./src/utils/winston-utils');
-const swaggerSpec = require('./swagger/config');
+const logger = require('./src/logger');
+const swaggerSpec = require('./swagger');
 const notFoundMiddleware = require('./src/middleware/not-found-middleware');
 const errorHandlerMiddleware = require('./src/middleware/error-handler-middleware');
 const morganMiddleware = require('./src/middleware/morgan-middleware');
@@ -25,6 +26,7 @@ app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware); // Global error handling middleware
 
 // Start the server
+connectToDb();
 app.listen(port, () => {
   logger.info(`Server in ${nodeEnv} running on port ${port}`);
 });

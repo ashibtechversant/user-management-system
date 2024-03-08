@@ -1,5 +1,5 @@
 const responseFormatter = require('../utils/controllers/response-formatter');
-const logger = require('../utils/winston-utils');
+const logger = require('../logger');
 
 module.exports = async (err, _, res, next) => {
   res.status(err.status || 500);

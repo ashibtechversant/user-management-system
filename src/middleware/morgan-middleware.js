@@ -1,5 +1,5 @@
 const morgan = require('morgan');
-const logger = require('../utils/winston-utils');
+const logger = require('../logger');
 const { nodeEnv } = require('../../config');
 
 const stream = {
